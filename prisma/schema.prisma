@@ -1,0 +1,468 @@
+// Prisma schema for the hotel PMS + direct-booking platform.
+// Key modeling decisions: Decimal money (never float), date-only fields via @db.Date,
+// a BookingRoom join table (needed for multi-room bookings + room assignment + the
+// overbooking guard), GST modeled as CGST/SGST only (place of supply is always the
+// hotel itself), and no NextAuth Account/Session/VerificationToken tables (JWT strategy).
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ---------- Enums ----------
+
+enum Role {
+  OWNER
+  MANAGER
+  FRONTDESK
+  HOUSEKEEPING
+}
+
+enum RoomStatus {
+  CLEAN
+  DIRTY
+  OCCUPIED
+  OUT_OF_ORDER
+}
+
+enum BookingSource {
+  DIRECT
+  WALK_IN
+  BOOKING_COM
+  AGODA
+  AIRBNB
+  MMT
+}
+
+enum BookingStatus {
+  CONFIRMED
+  CHECKED_IN
+  CHECKED_OUT
+  CANCELLED
+  NO_SHOW
+}
+
+enum PaymentMethod {
+  CASH
+  RAZORPAY
+  BANK_TRANSFER
+  CARD
+  UPI
+  OTHER
+}
+
+enum PaymentType {
+  PAYMENT
+  REFUND
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+}
+
+enum IdType {
+  AADHAAR
+  PASSPORT
+  VOTER_ID
+  DRIVING_LICENSE
+  OTHER
+}
+
+enum ChannelType {
+  BOOKING_COM
+  AIRBNB
+  AGODA
+  MMT
+  OTHER
+}
+
+enum HousekeepingStatus {
+  PENDING
+  IN_PROGRESS
+  DONE
+}
+
+enum SubscriptionStatus {
+  TRIALING
+  ACTIVE
+  PAST_DUE
+  HALTED
+  CANCELLED
+  EXPIRED
+}
+
+// ---------- Tenant ----------
+
+model Hotel {
+  id                String   @id @default(cuid())
+  slug              String   @unique
+  name              String
+  phone             String?
+  email             String?
+  address           String?
+  city              String?
+  state             String?
+  pincode           String?
+  gstin             String?
+  description       String?
+  logoUrl           String?
+  timezone          String   @default("Asia/Kolkata")
+  currency          String   @default("INR")
+  defaultLocale     String   @default("bn") // "bn" | "en"
+  checkInTime       String   @default("12:00")
+  checkOutTime      String   @default("11:00")
+  isActive          Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  users              User[]
+  roomTypes          RoomType[]
+  rooms              Room[]
+  guests             Guest[]
+  bookings           Booking[]
+  bookingRooms       BookingRoom[]
+  payments           Payment[]
+  invoices           Invoice[]
+  rateAvailabilities RateAvailability[]
+  housekeepingTasks  HousekeepingTask[]
+  channelConnections ChannelConnection[]
+  channelBlocks      ChannelBlock[]
+  razorpaySettings   RazorpaySettings?
+  platformSubscription PlatformSubscription?
+}
+
+model User {
+  id              String    @id @default(cuid())
+  hotelId         String
+  name            String
+  email           String    @unique
+  passwordHash    String
+  role            Role
+  phone           String?
+  locale          String    @default("bn")
+  isActive        Boolean   @default(true)
+  emailVerifiedAt DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  hotel              Hotel              @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  createdBookings    Booking[]          @relation("BookingCreatedBy")
+  recordedPayments   Payment[]          @relation("PaymentCreatedBy")
+  housekeepingTasks  HousekeepingTask[] @relation("HousekeepingAssignee")
+  verificationToken  VerificationToken?
+
+  @@index([hotelId])
+}
+
+// Signup requires the owner to verify their email before they can log in
+// (src/auth.ts rejects sign-in while User.emailVerifiedAt is null). One live
+// token per user — resending simply overwrites it via the @unique on userId.
+model VerificationToken {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ---------- Rooms & inventory ----------
+
+model RoomType {
+  id          String   @id @default(cuid())
+  hotelId     String
+  name        String
+  description String?
+  maxAdults   Int      @default(2)
+  maxChildren Int      @default(0)
+  basePrice   Decimal  @db.Decimal(10, 2)
+  photos      String[] @default([])
+  amenities   String[] @default([])
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  hotel              Hotel               @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  rooms              Room[]
+  bookingRooms       BookingRoom[]
+  rateAvailabilities RateAvailability[]
+  channelConnections ChannelConnection[]
+  channelBlocks      ChannelBlock[]
+
+  @@index([hotelId])
+}
+
+model Room {
+  id         String     @id @default(cuid())
+  hotelId    String
+  roomTypeId String
+  roomNumber String
+  floor      String?
+  status     RoomStatus @default(CLEAN)
+  notes      String?
+  isActive   Boolean    @default(true)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  hotel             Hotel              @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  roomType          RoomType           @relation(fields: [roomTypeId], references: [id], onDelete: Cascade)
+  bookingRooms      BookingRoom[]
+  housekeepingTasks HousekeepingTask[]
+
+  @@unique([roomTypeId, roomNumber])
+  @@index([hotelId, status])
+}
+
+// ---------- Rate & availability calendar ----------
+
+model RateAvailability {
+  id                String   @id @default(cuid())
+  hotelId           String
+  roomTypeId        String
+  date              DateTime @db.Date
+  price             Decimal? @db.Decimal(10, 2) // null = use RoomType.basePrice
+  availableOverride Int? // null = use physical room count
+  closedOut         Boolean  @default(false) // stop-sell
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  hotel    Hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  roomType RoomType @relation(fields: [roomTypeId], references: [id], onDelete: Cascade)
+
+  @@unique([roomTypeId, date])
+  @@index([hotelId, date])
+}
+
+// ---------- Guests ----------
+
+model Guest {
+  id        String   @id @default(cuid())
+  hotelId   String
+  name      String
+  phone     String?
+  email     String?
+  idType    IdType?
+  idNumber  String?
+  address   String?
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  hotel    Hotel     @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  bookings Booking[]
+
+  @@index([hotelId, phone])
+  @@index([hotelId, name])
+}
+
+// ---------- Bookings ----------
+
+model Booking {
+  id                 String        @id @default(cuid())
+  hotelId            String
+  guestId            String
+  source             BookingSource
+  status             BookingStatus @default(CONFIRMED)
+  checkIn            DateTime      @db.Date
+  checkOut           DateTime      @db.Date
+  adults             Int           @default(1)
+  children           Int           @default(0)
+  notes              String?
+  totalAmount        Decimal       @db.Decimal(10, 2)
+  createdById        String?
+  cancelledAt        DateTime?
+  cancellationReason String?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  hotel        Hotel         @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  guest        Guest         @relation(fields: [guestId], references: [id], onDelete: Restrict)
+  createdBy    User?         @relation("BookingCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  bookingRooms BookingRoom[]
+  payments     Payment[]
+  invoice      Invoice?
+
+  @@index([hotelId, checkIn])
+  @@index([hotelId, status])
+  @@index([hotelId, source])
+}
+
+// One row per physical room in a booking; the atomic unit for overbooking checks
+model BookingRoom {
+  id           String   @id @default(cuid())
+  hotelId      String
+  bookingId    String
+  roomTypeId   String
+  roomId       String? // null until assigned at front desk
+  checkIn      DateTime @db.Date
+  checkOut     DateTime @db.Date
+  ratePerNight Decimal  @db.Decimal(10, 2) // snapshot at booking time
+  amount       Decimal  @db.Decimal(10, 2)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  hotel    Hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  booking  Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  roomType RoomType @relation(fields: [roomTypeId], references: [id], onDelete: Restrict)
+  room     Room?    @relation(fields: [roomId], references: [id], onDelete: SetNull)
+
+  @@index([hotelId, roomTypeId, checkIn, checkOut])
+  @@index([roomId])
+}
+
+// ---------- Payments ----------
+
+model Payment {
+  id                String        @id @default(cuid())
+  hotelId           String
+  bookingId         String
+  type              PaymentType   @default(PAYMENT)
+  method            PaymentMethod
+  status            PaymentStatus @default(PAID) // RAZORPAY payments start PENDING
+  amount            Decimal       @db.Decimal(10, 2)
+  razorpayOrderId   String?
+  razorpayPaymentId String?
+  razorpayLinkId    String?
+  razorpayShortUrl  String? // shareable payment page URL, shown to staff to send to the guest
+  notes             String?
+  paidAt            DateTime?
+  createdById       String?
+  createdAt         DateTime      @default(now())
+
+  hotel     Hotel   @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  booking   Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  createdBy User?   @relation("PaymentCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([hotelId, bookingId])
+}
+
+model RazorpaySettings {
+  id        String   @id @default(cuid())
+  hotelId   String   @unique
+  keyId     String
+  keySecret String // encrypted at rest by the app layer
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+}
+
+// ---------- Platform subscription (the hotel's own ₹999/mo subscription to
+// this SaaS, billed via the platform's own Razorpay account) — distinct from
+// RazorpaySettings above, which is each hotel's own account for collecting
+// payments from their guests.
+model PlatformSubscription {
+  id                     String             @id @default(cuid())
+  hotelId                String             @unique
+  status                 SubscriptionStatus @default(TRIALING)
+  razorpayCustomerId     String?
+  razorpaySubscriptionId String?            @unique
+  currentPeriodEnd       DateTime // trial end date, or paid period end once subscribed
+  createdAt              DateTime           @default(now())
+  updatedAt              DateTime           @updatedAt
+
+  hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+}
+
+// ---------- GST invoices ----------
+
+model Invoice {
+  id            String   @id @default(cuid())
+  hotelId       String
+  bookingId     String   @unique
+  invoiceNumber String // e.g. "HTL/2026/0001", sequential per hotel
+  issueDate     DateTime @default(now())
+  guestName     String
+  guestGstin    String?
+  placeOfSupply String // hotel's state
+  taxableAmount Decimal  @db.Decimal(10, 2)
+  cgstRate      Decimal  @db.Decimal(4, 2)
+  cgstAmount    Decimal  @db.Decimal(10, 2)
+  sgstRate      Decimal  @db.Decimal(4, 2)
+  sgstAmount    Decimal  @db.Decimal(10, 2)
+  totalAmount   Decimal  @db.Decimal(10, 2)
+  createdAt     DateTime @default(now())
+
+  hotel   Hotel   @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  booking Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  @@unique([hotelId, invoiceNumber])
+  @@index([hotelId, issueDate])
+}
+
+// ---------- Housekeeping ----------
+
+model HousekeepingTask {
+  id           String             @id @default(cuid())
+  hotelId      String
+  roomId       String
+  assignedToId String?
+  status       HousekeepingStatus @default(PENDING)
+  notes        String?
+  dueDate      DateTime?          @db.Date
+  completedAt  DateTime?
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+
+  hotel      Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  room       Room  @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  assignedTo User? @relation("HousekeepingAssignee", fields: [assignedToId], references: [id], onDelete: SetNull)
+
+  @@index([hotelId, status])
+}
+
+// ---------- OTA iCal sync ----------
+//
+// V1 syncs AVAILABILITY ONLY (blocked date ranges), not full booking details or rates,
+// and runs on a schedule (near-real-time, hours) rather than instantly. The ChannelAdapter
+// TS interface (src/lib/channels/adapter.ts) is the seam for future direct-API adapters;
+// only these two models should ever need to change to support that.
+
+model ChannelConnection {
+  id              String      @id @default(cuid())
+  hotelId         String
+  roomTypeId      String
+  channel         ChannelType
+  icalImportUrl   String?
+  icalExportToken String      @unique @default(cuid())
+  lastSyncedAt    DateTime?
+  lastSyncStatus  String? // "OK" | "ERROR"
+  lastSyncError   String?
+  isActive        Boolean     @default(true)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  hotel         Hotel          @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  roomType      RoomType       @relation(fields: [roomTypeId], references: [id], onDelete: Cascade)
+  channelBlocks ChannelBlock[]
+
+  @@unique([roomTypeId, channel])
+}
+
+// Blocked date ranges ingested from an external iCal feed
+model ChannelBlock {
+  id                  String   @id @default(cuid())
+  hotelId             String
+  channelConnectionId String
+  roomTypeId          String
+  startDate           DateTime @db.Date
+  endDate             DateTime @db.Date
+  externalUid         String // iCal event UID, for de-duping on re-sync
+  summary             String?
+  createdAt           DateTime @default(now())
+
+  hotel             Hotel             @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  channelConnection ChannelConnection @relation(fields: [channelConnectionId], references: [id], onDelete: Cascade)
+  roomType          RoomType          @relation(fields: [roomTypeId], references: [id], onDelete: Cascade)
+
+  @@unique([channelConnectionId, externalUid])
+  @@index([hotelId, roomTypeId, startDate, endDate])
+}
