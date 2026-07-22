@@ -65,7 +65,7 @@ export default async function GuestDetailPage({
         />
         <button
           type="submit"
-          className="mt-2 w-full rounded-xl bg-slate-900 px-4 py-3.5 text-base font-semibold text-white dark:bg-white dark:text-slate-900"
+          className="mt-2 w-full rounded-xl bg-primary px-4 py-3.5 text-base font-semibold text-primary-foreground"
         >
           {t("common.save")}
         </button>
@@ -75,7 +75,7 @@ export default async function GuestDetailPage({
         <h2 className="font-semibold">{t("guests.bookingHistory")}</h2>
 
         {guest.bookings.length === 0 && (
-          <p className="text-sm text-black/60 dark:text-white/60">{t("guests.noBookings")}</p>
+          <p className="text-sm text-ink/60 dark:text-sand/60">{t("guests.noBookings")}</p>
         )}
 
         <div className="flex flex-col gap-2">
@@ -83,13 +83,13 @@ export default async function GuestDetailPage({
             <Link
               key={booking.id}
               href={`/bookings/${booking.id}`}
-              className="flex items-center justify-between gap-3 rounded-xl border border-black/10 p-3 dark:border-white/10"
+              className="flex items-center justify-between gap-3 rounded-xl border border-ink/10 p-3 dark:border-sand/10"
             >
               <div>
                 <p className="text-sm font-medium">
                   {formatFullDate(booking.checkIn, locale)} → {formatFullDate(booking.checkOut, locale)}
                 </p>
-                <p className="text-sm text-black/60 dark:text-white/60">
+                <p className="text-sm text-ink/60 dark:text-sand/60">
                   {formatCurrency(booking.totalAmount.toString(), locale)}
                 </p>
               </div>

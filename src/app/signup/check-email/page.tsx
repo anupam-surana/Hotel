@@ -11,7 +11,7 @@ export default async function CheckEmailPage({
   const t = await getTranslations("signup");
 
   const inputClass =
-    "w-full rounded-xl border border-black/15 px-4 py-3.5 text-base outline-none focus:border-black/40 dark:border-white/20 dark:bg-white/5 dark:focus:border-white/50";
+    "w-full rounded-xl border border-ink/15 px-4 py-3.5 text-base outline-none focus:border-ink/40 dark:border-sand/20 dark:bg-sand/5 dark:focus:border-sand/50";
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-8 p-6">
@@ -35,7 +35,7 @@ export default async function CheckEmailPage({
             {t("resendSent")}
           </p>
         )}
-        {!error && !resent && <p className="mt-4 text-black/60 dark:text-white/60">{t("checkEmailBody")}</p>}
+        {!error && !resent && <p className="mt-4 text-ink/60 dark:text-sand/60">{t("checkEmailBody")}</p>}
 
         <form action={resendVerification} className="mt-8 flex flex-col gap-3 text-left">
           <label htmlFor="email" className="text-sm font-medium">
@@ -44,7 +44,7 @@ export default async function CheckEmailPage({
           <input id="email" name="email" type="email" required maxLength={200} className={inputClass} />
           <button
             type="submit"
-            className="w-full rounded-xl border border-black/15 px-4 py-3.5 text-base font-semibold dark:border-white/20"
+            className="w-full rounded-xl border border-ink/15 px-4 py-3.5 text-base font-semibold dark:border-sand/20"
           >
             {t("resendVerification")}
           </button>

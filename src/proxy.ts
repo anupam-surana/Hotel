@@ -10,14 +10,19 @@ export default auth((req) => {
   const isLoggedIn = !!req.auth;
   const isLoginPage = pathname === "/login";
   const isSignupPage = pathname === "/signup" || pathname.startsWith("/signup/");
+  const isAuthUtilityPage =
+    pathname === "/forgot-password" ||
+    pathname === "/reset-password" ||
+    pathname === "/accept-invite";
+  const isPublicWhileLoggedOut = isLoginPage || isSignupPage || isAuthUtilityPage;
 
-  if (!isLoggedIn && !isLoginPage && !isSignupPage) {
+  if (!isLoggedIn && !isPublicWhileLoggedOut) {
     const loginUrl = new URL("/login", req.url);
     loginUrl.searchParams.set("callbackUrl", pathname);
     return NextResponse.redirect(loginUrl);
   }
 
-  if (isLoggedIn && (isLoginPage || isSignupPage)) {
+  if (isLoggedIn && isPublicWhileLoggedOut) {
     return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 

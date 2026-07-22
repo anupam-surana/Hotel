@@ -28,7 +28,7 @@ export default async function MorePage() {
           <Link
             key={item.href}
             href={item.href}
-            className="rounded-xl border border-black/10 px-4 py-3.5 text-base font-medium dark:border-white/10"
+            className="rounded-xl border border-ink/10 px-4 py-3.5 text-base font-medium dark:border-sand/10"
           >
             {t(`nav.${item.key}`)}
           </Link>

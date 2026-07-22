@@ -24,7 +24,12 @@
     "signingIn": "Signing in...",
     "noAccount": "Don't have an account?",
     "createAccount": "Create one",
-    "resendVerificationLink": "Resend verification email"
+    "resendVerificationLink": "Resend verification email",
+    "forgotPassword": "Forgot password?",
+    "resetComplete": "Password updated. Sign in with your new password.",
+    "inviteAccepted": "Account activated. Sign in to get started.",
+    "inviteLinkInvalid": "That invite link isn't valid.",
+    "inviteLinkExpired": "That invite link has expired. Ask your hotel owner to resend it."
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -114,7 +119,9 @@
     "channelNoImportUrl": "Add an import URL before syncing.",
     "channelSyncFailed": "Sync failed. Check the import URL and try again.",
     "emailTaken": "An account with that email already exists.",
-    "passwordMismatch": "Passwords don't match."
+    "passwordMismatch": "Passwords don't match.",
+    "refundExceedsPaid": "The refund amount can't exceed what's actually been paid.",
+    "cannotDeactivateSelf": "You can't deactivate your own account."
   },
   "rates": {
     "title": "Rates & availability",
@@ -314,7 +321,15 @@
     "payOnline": "Pay online",
     "payNow": "Pay now",
     "continuePayment": "Continue your pending payment",
-    "questionsContact": "Questions about your booking? Contact us:"
+    "questionsContact": "Questions about your booking? Contact us:",
+    "findMyBooking": "Find my booking",
+    "myBookingTitle": "Find your booking",
+    "bookingReference": "Booking reference",
+    "lookupPhone": "Phone number",
+    "lookupCta": "Look up booking",
+    "lookupNotFound": "We couldn't find a booking matching those details.",
+    "cancelConfirm": "Cancel this booking?",
+    "requestCancellation": "Cancel booking"
   },
   "channels": {
     "title": "OTA calendar sync",
@@ -403,5 +418,47 @@
       "CANCELLED": "Cancelled",
       "EXPIRED": "Trial ended"
     }
+  },
+  "passwordReset": {
+    "forgotTitle": "Reset your password",
+    "forgotSubtitle": "Enter your email and we'll send you a reset link.",
+    "resetSent": "If that email is registered, we've sent a reset link.",
+    "resetLinkInvalid": "That reset link isn't valid. Request a new one below.",
+    "resetLinkExpired": "That reset link has expired. Request a new one below.",
+    "emailLabel": "Email",
+    "sendResetLink": "Send reset link",
+    "backToLogin": "Back to sign in",
+    "resetTitle": "Set a new password",
+    "newPassword": "New password",
+    "confirmNewPassword": "Confirm new password",
+    "setNewPassword": "Set new password"
+  },
+  "team": {
+    "title": "Team",
+    "you": "you",
+    "inactive": "Inactive",
+    "invitePending": "Invite pending",
+    "deactivateConfirm": "Deactivate this team member? They'll lose access immediately.",
+    "deactivate": "Deactivate",
+    "reactivate": "Reactivate",
+    "inviteHeading": "Invite a team member",
+    "name": "Name",
+    "email": "Email",
+    "role": "Role",
+    "invite": "Send invite",
+    "settingsTitle": "Team",
+    "settingsDescription": "Add and manage your hotel's staff accounts.",
+    "manageTeam": "Manage team",
+    "acceptInviteTitle": "Set your password",
+    "acceptInviteSubtitle": "Choose a password to activate your account.",
+    "setPassword": "Password",
+    "confirmPassword": "Confirm password",
+    "acceptInviteCta": "Activate account"
+  },
+  "roles": {
+    "OWNER": "Owner",
+    "MANAGER": "Manager",
+    "FRONTDESK": "Front desk",
+    "HOUSEKEEPING": "Housekeeping"
   }
 }

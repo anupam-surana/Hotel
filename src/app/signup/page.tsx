@@ -19,7 +19,7 @@ export default async function SignupPage({
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
           <h1 className="text-2xl font-bold">{t("common.appName")}</h1>
-          <p className="mt-1 text-black/60 dark:text-white/60">{t("signup.title")}</p>
+          <p className="mt-1 text-ink/60 dark:text-sand/60">{t("signup.title")}</p>
         </div>
 
         <div className="mb-4">
@@ -28,7 +28,7 @@ export default async function SignupPage({
 
         <SignupForm />
 
-        <p className="mt-6 text-center text-sm text-black/60 dark:text-white/60">
+        <p className="mt-6 text-center text-sm text-ink/60 dark:text-sand/60">
           {t("signup.alreadyHaveAccount")}{" "}
           <Link href="/login" className="font-medium underline">
             {t("auth.signIn")}

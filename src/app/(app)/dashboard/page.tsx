@@ -80,13 +80,13 @@ export default async function DashboardPage() {
       {user.role === "OWNER" && roomTypeCount === 0 && (
         <Link
           href="/onboarding"
-          className="rounded-xl border border-black/15 bg-black/5 px-4 py-3.5 text-sm font-semibold dark:border-white/20 dark:bg-white/5"
+          className="rounded-xl border border-ink/15 bg-ink/5 px-4 py-3.5 text-sm font-semibold dark:border-sand/20 dark:bg-sand/5"
         >
           {t("dashboard.finishSetup")}
         </Link>
       )}
 
-      <div className="rounded-2xl border border-black/10 p-4 dark:border-white/10">
+      <div className="rounded-2xl border border-ink/10 p-4 dark:border-sand/10">
         <Meter label={t("dashboard.occupancy")} value={occupiedCount} max={totalRooms} />
       </div>
 
@@ -100,22 +100,22 @@ export default async function DashboardPage() {
           <h2 className="font-semibold">
             {t("dashboard.todayArrivals")} ({arrivals.length})
           </h2>
-          <Link href="/front-desk" className="text-sm font-medium text-black/60 dark:text-white/60">
+          <Link href="/front-desk" className="text-sm font-medium text-ink/60 dark:text-sand/60">
             {t("dashboard.viewAll")}
           </Link>
         </div>
         {arrivals.length === 0 ? (
-          <p className="text-sm text-black/60 dark:text-white/60">{t("dashboard.noArrivals")}</p>
+          <p className="text-sm text-ink/60 dark:text-sand/60">{t("dashboard.noArrivals")}</p>
         ) : (
           <div className="flex flex-col gap-2">
             {arrivals.slice(0, 5).map((b) => (
               <Link
                 key={b.id}
                 href={`/bookings/${b.id}`}
-                className="flex items-center justify-between gap-3 rounded-xl border border-black/10 p-3 dark:border-white/10"
+                className="flex items-center justify-between gap-3 rounded-xl border border-ink/10 p-3 dark:border-sand/10"
               >
                 <p className="truncate font-medium">{b.guest.name}</p>
-                <p className="shrink-0 text-sm text-black/60 dark:text-white/60">
+                <p className="shrink-0 text-sm text-ink/60 dark:text-sand/60">
                   {b.bookingRooms[0]?.roomType.name}
                 </p>
               </Link>
@@ -129,22 +129,22 @@ export default async function DashboardPage() {
           <h2 className="font-semibold">
             {t("dashboard.todayDepartures")} ({departures.length})
           </h2>
-          <Link href="/front-desk" className="text-sm font-medium text-black/60 dark:text-white/60">
+          <Link href="/front-desk" className="text-sm font-medium text-ink/60 dark:text-sand/60">
             {t("dashboard.viewAll")}
           </Link>
         </div>
         {departures.length === 0 ? (
-          <p className="text-sm text-black/60 dark:text-white/60">{t("dashboard.noDepartures")}</p>
+          <p className="text-sm text-ink/60 dark:text-sand/60">{t("dashboard.noDepartures")}</p>
         ) : (
           <div className="flex flex-col gap-2">
             {departures.slice(0, 5).map((b) => (
               <Link
                 key={b.id}
                 href={`/bookings/${b.id}`}
-                className="flex items-center justify-between gap-3 rounded-xl border border-black/10 p-3 dark:border-white/10"
+                className="flex items-center justify-between gap-3 rounded-xl border border-ink/10 p-3 dark:border-sand/10"
               >
                 <p className="truncate font-medium">{b.guest.name}</p>
-                <p className="shrink-0 text-sm text-black/60 dark:text-white/60">
+                <p className="shrink-0 text-sm text-ink/60 dark:text-sand/60">
                   {b.bookingRooms[0]?.roomType.name}
                 </p>
               </Link>
@@ -158,22 +158,22 @@ export default async function DashboardPage() {
           <h2 className="font-semibold">
             {t("dashboard.upcomingBookings")} ({upcoming.length})
           </h2>
-          <Link href="/bookings?status=CONFIRMED" className="text-sm font-medium text-black/60 dark:text-white/60">
+          <Link href="/bookings?status=CONFIRMED" className="text-sm font-medium text-ink/60 dark:text-sand/60">
             {t("dashboard.viewAll")}
           </Link>
         </div>
         {upcoming.length === 0 ? (
-          <p className="text-sm text-black/60 dark:text-white/60">{t("dashboard.noUpcomingBookings")}</p>
+          <p className="text-sm text-ink/60 dark:text-sand/60">{t("dashboard.noUpcomingBookings")}</p>
         ) : (
           <div className="flex flex-col gap-2">
             {upcoming.slice(0, 5).map((b) => (
               <Link
                 key={b.id}
                 href={`/bookings/${b.id}`}
-                className="flex items-center justify-between gap-3 rounded-xl border border-black/10 p-3 dark:border-white/10"
+                className="flex items-center justify-between gap-3 rounded-xl border border-ink/10 p-3 dark:border-sand/10"
               >
                 <p className="truncate font-medium">{b.guest.name}</p>
-                <p className="shrink-0 text-sm text-black/60 dark:text-white/60">
+                <p className="shrink-0 text-sm text-ink/60 dark:text-sand/60">
                   {formatFullDate(b.checkIn, locale)}
                 </p>
               </Link>
@@ -188,7 +188,7 @@ export default async function DashboardPage() {
             <h2 className="font-semibold">
               {t("dashboard.cancellations")} ({cancellations.length})
             </h2>
-            <Link href="/bookings?status=CANCELLED" className="text-sm font-medium text-black/60 dark:text-white/60">
+            <Link href="/bookings?status=CANCELLED" className="text-sm font-medium text-ink/60 dark:text-sand/60">
               {t("dashboard.viewAll")}
             </Link>
           </div>
@@ -197,10 +197,10 @@ export default async function DashboardPage() {
               <Link
                 key={b.id}
                 href={`/bookings/${b.id}`}
-                className="flex items-center justify-between gap-3 rounded-xl border border-black/10 p-3 dark:border-white/10"
+                className="flex items-center justify-between gap-3 rounded-xl border border-ink/10 p-3 dark:border-sand/10"
               >
                 <p className="truncate font-medium">{b.guest.name}</p>
-                <p className="shrink-0 text-sm text-black/60 dark:text-white/60">
+                <p className="shrink-0 text-sm text-ink/60 dark:text-sand/60">
                   {b.cancelledAt && formatFullDate(b.cancelledAt, locale)}
                 </p>
               </Link>

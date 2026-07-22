@@ -28,7 +28,7 @@ export default async function NewRoomTypePage({
             required
             maxLength={100}
             placeholder={t("roomType.namePlaceholder")}
-            className="w-full rounded-xl border border-black/15 px-4 py-3.5 text-base outline-none focus:border-black/40 dark:border-white/20 dark:bg-white/5 dark:focus:border-white/50"
+            className="w-full rounded-xl border border-ink/15 px-4 py-3.5 text-base outline-none focus:border-ink/40 dark:border-sand/20 dark:bg-sand/5 dark:focus:border-sand/50"
           />
         </div>
 
@@ -41,7 +41,7 @@ export default async function NewRoomTypePage({
             name="description"
             maxLength={1000}
             rows={3}
-            className="w-full rounded-xl border border-black/15 px-4 py-3.5 text-base outline-none focus:border-black/40 dark:border-white/20 dark:bg-white/5 dark:focus:border-white/50"
+            className="w-full rounded-xl border border-ink/15 px-4 py-3.5 text-base outline-none focus:border-ink/40 dark:border-sand/20 dark:bg-sand/5 dark:focus:border-sand/50"
           />
         </div>
 
@@ -59,7 +59,7 @@ export default async function NewRoomTypePage({
               max={20}
               defaultValue={2}
               required
-              className="w-full rounded-xl border border-black/15 px-4 py-3.5 text-base outline-none focus:border-black/40 dark:border-white/20 dark:bg-white/5 dark:focus:border-white/50"
+              className="w-full rounded-xl border border-ink/15 px-4 py-3.5 text-base outline-none focus:border-ink/40 dark:border-sand/20 dark:bg-sand/5 dark:focus:border-sand/50"
             />
           </div>
           <div className="flex flex-col gap-1.5">
@@ -75,7 +75,7 @@ export default async function NewRoomTypePage({
               max={20}
               defaultValue={0}
               required
-              className="w-full rounded-xl border border-black/15 px-4 py-3.5 text-base outline-none focus:border-black/40 dark:border-white/20 dark:bg-white/5 dark:focus:border-white/50"
+              className="w-full rounded-xl border border-ink/15 px-4 py-3.5 text-base outline-none focus:border-ink/40 dark:border-sand/20 dark:bg-sand/5 dark:focus:border-sand/50"
             />
           </div>
         </div>
@@ -92,7 +92,7 @@ export default async function NewRoomTypePage({
             min={0}
             step="0.01"
             required
-            className="w-full rounded-xl border border-black/15 px-4 py-3.5 text-base outline-none focus:border-black/40 dark:border-white/20 dark:bg-white/5 dark:focus:border-white/50"
+            className="w-full rounded-xl border border-ink/15 px-4 py-3.5 text-base outline-none focus:border-ink/40 dark:border-sand/20 dark:bg-sand/5 dark:focus:border-sand/50"
           />
         </div>
 
@@ -106,14 +106,14 @@ export default async function NewRoomTypePage({
             type="url"
             maxLength={2000}
             placeholder={t("roomType.photoUrlPlaceholder")}
-            className="w-full rounded-xl border border-black/15 px-4 py-3.5 text-base outline-none focus:border-black/40 dark:border-white/20 dark:bg-white/5 dark:focus:border-white/50"
+            className="w-full rounded-xl border border-ink/15 px-4 py-3.5 text-base outline-none focus:border-ink/40 dark:border-sand/20 dark:bg-sand/5 dark:focus:border-sand/50"
           />
-          <p className="text-xs text-black/50 dark:text-white/50">{t("roomType.photoUrlHint")}</p>
+          <p className="text-xs text-ink/50 dark:text-sand/50">{t("roomType.photoUrlHint")}</p>
         </div>
 
         <button
           type="submit"
-          className="mt-2 w-full rounded-xl bg-slate-900 px-4 py-3.5 text-base font-semibold text-white dark:bg-white dark:text-slate-900"
+          className="mt-2 w-full rounded-xl bg-primary px-4 py-3.5 text-base font-semibold text-primary-foreground"
         >
           {t("roomType.create")}
         </button>

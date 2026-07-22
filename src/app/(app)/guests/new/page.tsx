@@ -20,7 +20,7 @@ export default async function NewGuestPage({
         <GuestFormFields />
         <button
           type="submit"
-          className="mt-2 w-full rounded-xl bg-slate-900 px-4 py-3.5 text-base font-semibold text-white dark:bg-white dark:text-slate-900"
+          className="mt-2 w-full rounded-xl bg-primary px-4 py-3.5 text-base font-semibold text-primary-foreground"
         >
           {t("guests.create")}
         </button>

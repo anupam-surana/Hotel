@@ -37,51 +37,51 @@ export default async function InvoicePage({
   return (
     <div className="mx-auto max-w-2xl p-6 print:p-0">
       <div className="mb-6 flex items-center justify-between print:hidden">
-        <Link href={`/bookings/${booking.id}`} className="text-sm font-medium text-black/60 dark:text-white/60">
+        <Link href={`/bookings/${booking.id}`} className="text-sm font-medium text-ink/60 dark:text-sand/60">
           ← {t("common.back")}
         </Link>
         <PrintButton>{t("invoice.print")}</PrintButton>
       </div>
 
-      <div className="rounded-2xl border border-black/10 p-6 print:border-0 print:p-0 dark:border-white/10">
+      <div className="rounded-2xl border border-ink/10 p-6 print:border-0 print:p-0 dark:border-sand/10">
         <div className="mb-6 flex items-start justify-between gap-4">
           <div>
             <h1 className="text-lg font-bold">{hotel.name}</h1>
             {(hotel.address || hotel.city) && (
-              <p className="text-sm text-black/70 dark:text-white/70">
+              <p className="text-sm text-ink/70 dark:text-sand/70">
                 {[hotel.address, hotel.city, hotel.state, hotel.pincode].filter(Boolean).join(", ")}
               </p>
             )}
-            {hotel.phone && <p className="text-sm text-black/70 dark:text-white/70">{hotel.phone}</p>}
+            {hotel.phone && <p className="text-sm text-ink/70 dark:text-sand/70">{hotel.phone}</p>}
             {hotel.gstin && (
-              <p className="text-sm text-black/70 dark:text-white/70">
+              <p className="text-sm text-ink/70 dark:text-sand/70">
                 {t("invoice.gstin")}: {hotel.gstin}
               </p>
             )}
           </div>
           <div className="text-right">
             <h2 className="font-semibold">{t("invoice.title")}</h2>
-            <p className="text-sm text-black/70 dark:text-white/70">{invoice.invoiceNumber}</p>
-            <p className="text-sm text-black/70 dark:text-white/70">{formatFullDate(invoice.issueDate, locale)}</p>
+            <p className="text-sm text-ink/70 dark:text-sand/70">{invoice.invoiceNumber}</p>
+            <p className="text-sm text-ink/70 dark:text-sand/70">{formatFullDate(invoice.issueDate, locale)}</p>
           </div>
         </div>
 
         <div className="mb-6 grid grid-cols-2 gap-4 text-sm">
           <div>
             <p className="font-medium">{t("invoice.billTo")}</p>
-            <p className="text-black/70 dark:text-white/70">{invoice.guestName}</p>
+            <p className="text-ink/70 dark:text-sand/70">{invoice.guestName}</p>
           </div>
           <div className="text-right">
             <p className="font-medium">{t("invoice.placeOfSupply")}</p>
-            <p className="text-black/70 dark:text-white/70">{invoice.placeOfSupply}</p>
+            <p className="text-ink/70 dark:text-sand/70">{invoice.placeOfSupply}</p>
           </div>
         </div>
 
-        <div className="mb-6 rounded-xl border border-black/10 p-3 text-sm dark:border-white/10">
+        <div className="mb-6 rounded-xl border border-ink/10 p-3 text-sm dark:border-sand/10">
           <p>
             {formatFullDate(booking.checkIn, locale)} → {formatFullDate(booking.checkOut, locale)}
           </p>
-          <p className="text-black/70 dark:text-white/70">
+          <p className="text-ink/70 dark:text-sand/70">
             {roomTypeName}
             {quantity > 1 ? ` × ${quantity}` : ""}
           </p>
@@ -105,14 +105,14 @@ export default async function InvoicePage({
               </td>
               <td className="py-1 text-right">{formatCurrency(invoice.sgstAmount.toString(), locale)}</td>
             </tr>
-            <tr className="border-t border-black/10 font-bold dark:border-white/10">
+            <tr className="border-t border-ink/10 font-bold dark:border-sand/10">
               <td className="py-2">{t("invoice.total")}</td>
               <td className="py-2 text-right">{formatCurrency(invoice.totalAmount.toString(), locale)}</td>
             </tr>
           </tbody>
         </table>
 
-        <p className="mt-8 text-xs text-black/50 dark:text-white/50">{t("invoice.footerNote")}</p>
+        <p className="mt-8 text-xs text-ink/50 dark:text-sand/50">{t("invoice.footerNote")}</p>
       </div>
     </div>
   );

@@ -39,13 +39,13 @@ export default async function RateEditPage({
 
   return (
     <div className="flex flex-col gap-4">
-      <Link href={backHref} className="text-sm font-medium text-black/60 dark:text-white/60">
+      <Link href={backHref} className="text-sm font-medium text-ink/60 dark:text-sand/60">
         ← {t("rateEdit.backToCalendar")}
       </Link>
 
       <div>
         <h1 className="text-xl font-bold">{formatFullDate(date, locale)}</h1>
-        <p className="text-sm text-black/60 dark:text-white/60">{roomType.name}</p>
+        <p className="text-sm text-ink/60 dark:text-sand/60">{roomType.name}</p>
       </div>
 
       <FormErrorBanner code={error} />
@@ -64,9 +64,9 @@ export default async function RateEditPage({
             step="0.01"
             defaultValue={override?.price?.toString() ?? ""}
             placeholder={formatCurrency(roomType.basePrice.toString(), locale)}
-            className="w-full rounded-xl border border-black/15 px-4 py-3.5 text-base outline-none focus:border-black/40 dark:border-white/20 dark:bg-white/5 dark:focus:border-white/50"
+            className="w-full rounded-xl border border-ink/15 px-4 py-3.5 text-base outline-none focus:border-ink/40 dark:border-sand/20 dark:bg-sand/5 dark:focus:border-sand/50"
           />
-          <p className="text-xs text-black/50 dark:text-white/50">{t("rateEdit.priceHint")}</p>
+          <p className="text-xs text-ink/50 dark:text-sand/50">{t("rateEdit.priceHint")}</p>
         </div>
 
         <div className="flex flex-col gap-1.5">
@@ -82,12 +82,12 @@ export default async function RateEditPage({
             max={999}
             defaultValue={override?.availableOverride ?? ""}
             placeholder={String(roomType.rooms.length)}
-            className="w-full rounded-xl border border-black/15 px-4 py-3.5 text-base outline-none focus:border-black/40 dark:border-white/20 dark:bg-white/5 dark:focus:border-white/50"
+            className="w-full rounded-xl border border-ink/15 px-4 py-3.5 text-base outline-none focus:border-ink/40 dark:border-sand/20 dark:bg-sand/5 dark:focus:border-sand/50"
           />
-          <p className="text-xs text-black/50 dark:text-white/50">{t("rateEdit.availableOverrideHint")}</p>
+          <p className="text-xs text-ink/50 dark:text-sand/50">{t("rateEdit.availableOverrideHint")}</p>
         </div>
 
-        <label className="flex items-center gap-2.5 rounded-xl border border-black/15 px-4 py-3.5 dark:border-white/20">
+        <label className="flex items-center gap-2.5 rounded-xl border border-ink/15 px-4 py-3.5 dark:border-sand/20">
           <input
             type="checkbox"
             name="closedOut"
@@ -99,7 +99,7 @@ export default async function RateEditPage({
 
         <button
           type="submit"
-          className="mt-2 w-full rounded-xl bg-slate-900 px-4 py-3.5 text-base font-semibold text-white dark:bg-white dark:text-slate-900"
+          className="mt-2 w-full rounded-xl bg-primary px-4 py-3.5 text-base font-semibold text-primary-foreground"
         >
           {t("common.save")}
         </button>

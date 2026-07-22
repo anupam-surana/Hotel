@@ -58,7 +58,7 @@ export default async function ReportsPage({
             id="from"
             name="from"
             defaultValue={dateKey(rangeStart)}
-            className="w-full rounded-xl border border-black/15 px-3 py-2.5 text-sm dark:border-white/20 dark:bg-white/5"
+            className="w-full rounded-xl border border-ink/15 px-3 py-2.5 text-sm dark:border-sand/20 dark:bg-sand/5"
           />
         </div>
         <div className="flex flex-1 flex-col gap-1.5">
@@ -70,12 +70,12 @@ export default async function ReportsPage({
             id="to"
             name="to"
             defaultValue={dateKey(rangeEndInclusive)}
-            className="w-full rounded-xl border border-black/15 px-3 py-2.5 text-sm dark:border-white/20 dark:bg-white/5"
+            className="w-full rounded-xl border border-ink/15 px-3 py-2.5 text-sm dark:border-sand/20 dark:bg-sand/5"
           />
         </div>
         <button
           type="submit"
-          className="rounded-xl border border-black/15 px-4 py-2.5 text-sm font-medium dark:border-white/20"
+          className="rounded-xl border border-ink/15 px-4 py-2.5 text-sm font-medium dark:border-sand/20"
         >
           {t("reports.apply")}
         </button>
@@ -90,16 +90,16 @@ export default async function ReportsPage({
       <section className="flex flex-col gap-3">
         <h2 className="font-semibold">{t("reports.sourceMix")}</h2>
         {sourceMix.length === 0 ? (
-          <p className="text-sm text-black/60 dark:text-white/60">{t("reports.noData")}</p>
+          <p className="text-sm text-ink/60 dark:text-sand/60">{t("reports.noData")}</p>
         ) : (
           <div className="flex flex-col gap-2">
             {sourceMix.map((row) => {
               const pct = totalBookings > 0 ? Math.round((row.bookingCount / totalBookings) * 100) : 0;
               return (
-                <div key={row.source} className="rounded-xl border border-black/10 p-3 dark:border-white/10">
+                <div key={row.source} className="rounded-xl border border-ink/10 p-3 dark:border-sand/10">
                   <div className="mb-1.5 flex items-center justify-between text-sm">
                     <span className="font-medium">{tSource(row.source)}</span>
-                    <span className="text-black/60 dark:text-white/60">
+                    <span className="text-ink/60 dark:text-sand/60">
                       {formatNumber(row.bookingCount, locale)} ·{" "}
                       {formatCurrency(row.bookingValue.toString(), locale)}
                     </span>
@@ -117,14 +117,14 @@ export default async function ReportsPage({
       <section className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
           <h2 className="font-semibold">{t("reports.dailySummary")}</h2>
-          <Link href={exportHref} className="text-sm font-medium text-black/60 dark:text-white/60">
+          <Link href={exportHref} className="text-sm font-medium text-ink/60 dark:text-sand/60">
             {t("reports.exportCsv")}
           </Link>
         </div>
-        <div className="overflow-x-auto rounded-xl border border-black/10 dark:border-white/10">
+        <div className="overflow-x-auto rounded-xl border border-ink/10 dark:border-sand/10">
           <table className="w-full min-w-[420px] text-sm">
             <thead>
-              <tr className="border-b border-black/10 text-left text-xs text-black/50 dark:border-white/10 dark:text-white/50">
+              <tr className="border-b border-ink/10 text-left text-xs text-ink/50 dark:border-sand/10 dark:text-sand/50">
                 <th className="px-3 py-2 font-medium">{t("reports.date")}</th>
                 <th className="px-3 py-2 font-medium">{t("reports.arrivals")}</th>
                 <th className="px-3 py-2 font-medium">{t("reports.departures")}</th>
@@ -134,7 +134,7 @@ export default async function ReportsPage({
             </thead>
             <tbody>
               {dailyRows.map((row) => (
-                <tr key={dateKey(row.date)} className="border-b border-black/5 last:border-0 dark:border-white/5">
+                <tr key={dateKey(row.date)} className="border-b border-ink/5 last:border-0 dark:border-sand/5">
                   <td className="px-3 py-2">{formatShortDate(row.date, locale)}</td>
                   <td className="px-3 py-2">{formatNumber(row.arrivals, locale)}</td>
                   <td className="px-3 py-2">{formatNumber(row.departures, locale)}</td>

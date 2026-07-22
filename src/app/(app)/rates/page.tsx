@@ -17,7 +17,7 @@ export default async function RatesIndexPage() {
     return (
       <div className="flex flex-col gap-4">
         <h1 className="text-xl font-bold">{t("title")}</h1>
-        <p className="rounded-2xl border border-dashed border-black/15 p-6 text-center text-sm text-black/60 dark:border-white/20 dark:text-white/60">
+        <p className="rounded-2xl border border-dashed border-ink/15 p-6 text-center text-sm text-ink/60 dark:border-sand/20 dark:text-sand/60">
           {t("noRoomTypes")}
         </p>
       </div>

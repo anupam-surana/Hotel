@@ -6,7 +6,7 @@ export function Meter({ label, value, max }: { label: string; value: number; max
   return (
     <div>
       <div className="mb-1.5 flex items-baseline justify-between">
-        <p className="text-sm text-black/60 dark:text-white/60">{label}</p>
+        <p className="text-sm text-ink/60 dark:text-sand/60">{label}</p>
         <p className="text-sm font-semibold">{pct}%</p>
       </div>
       <div className="h-2.5 w-full overflow-hidden rounded-full bg-blue-100 dark:bg-blue-500/15">

@@ -108,8 +108,8 @@ export default async function RatesCalendarPage({
             className={
               "shrink-0 rounded-full px-4 py-2 text-sm font-medium " +
               (rt.id === selectedRoomType.id
-                ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900"
-                : "border border-black/15 dark:border-white/20")
+                ? "bg-primary text-primary-foreground"
+                : "border border-ink/15 dark:border-sand/20")
             }
           >
             {rt.name}
@@ -121,7 +121,7 @@ export default async function RatesCalendarPage({
         <Link
           href={`/rates/${selectedRoomType.id}?month=${prevMonth}`}
           aria-label={t("prevMonth")}
-          className="rounded-full border border-black/15 px-3 py-2 text-sm dark:border-white/20"
+          className="rounded-full border border-ink/15 px-3 py-2 text-sm dark:border-sand/20"
         >
           ‹
         </Link>
@@ -129,18 +129,18 @@ export default async function RatesCalendarPage({
         <Link
           href={`/rates/${selectedRoomType.id}?month=${nextMonth}`}
           aria-label={t("nextMonth")}
-          className="rounded-full border border-black/15 px-3 py-2 text-sm dark:border-white/20"
+          className="rounded-full border border-ink/15 px-3 py-2 text-sm dark:border-sand/20"
         >
           ›
         </Link>
       </div>
 
-      <p className="text-sm text-black/60 dark:text-white/60">
+      <p className="text-sm text-ink/60 dark:text-sand/60">
         {t("basePriceLabel")}: {formatCurrency(selectedRoomType.basePrice.toString(), locale)} {t("perNight")} ·{" "}
         {t("physicalRooms", { count: physicalCount })}
       </p>
 
-      <div className="grid grid-cols-7 gap-1 text-center text-xs font-medium text-black/50 dark:text-white/50">
+      <div className="grid grid-cols-7 gap-1 text-center text-xs font-medium text-ink/50 dark:text-sand/50">
         {grid.slice(0, 7).map((day) => (
           <div key={dateKey(day)}>{weekdayLabel(day, locale)}</div>
         ))}
@@ -164,7 +164,7 @@ export default async function RatesCalendarPage({
             <div
               className={
                 "flex h-full flex-col gap-1 rounded-lg border p-1.5 text-left " +
-                (isToday ? "border-slate-900 dark:border-white " : "border-black/10 dark:border-white/10 ") +
+                (isToday ? "border-primary " : "border-ink/10 dark:border-sand/10 ") +
                 (!inMonth ? "opacity-40 " : "") +
                 (override?.closedOut ? "bg-red-50 dark:bg-red-500/10 " : customized ? "bg-amber-50 dark:bg-amber-500/10 " : "")
               }
@@ -175,7 +175,7 @@ export default async function RatesCalendarPage({
               ) : (
                 <>
                   <span className="text-[11px] font-medium">{formatCurrency(price.toString(), locale)}</span>
-                  <span className="text-[11px] text-black/50 dark:text-white/50">
+                  <span className="text-[11px] text-ink/50 dark:text-sand/50">
                     {formatNumber(remaining, locale)}/{formatNumber(capacity, locale)}
                   </span>
                 </>

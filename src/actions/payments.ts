@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { requireApiRole } from "@/lib/auth/session";
 import { decryptSecret } from "@/lib/crypto";
 import { createPaymentLink, fetchPaymentLinkStatus, RazorpayError } from "@/lib/razorpay";
+import { summarizePayments } from "@/lib/payments";
 import type { PaymentMethod } from "@/generated/prisma/enums";
 
 // RAZORPAY is handled by its own generatePaymentLink flow, not manual entry.
@@ -66,7 +67,10 @@ export async function recordRefund(bookingId: string, formData: FormData) {
   const user = await requireApiRole("OWNER", "MANAGER");
   const backPath = `/bookings/${bookingId}`;
 
-  const booking = await prisma.booking.findFirst({ where: { id: bookingId, hotelId: user.hotelId } });
+  const booking = await prisma.booking.findFirst({
+    where: { id: bookingId, hotelId: user.hotelId },
+    include: { payments: true },
+  });
   if (!booking) {
     withError("/bookings", "validation");
   }
@@ -74,6 +78,11 @@ export async function recordRefund(bookingId: string, formData: FormData) {
   const amount = readAmount(formData, backPath);
   const method = readManualMethod(formData, backPath);
   const notes = ((formData.get("notes") as string) || "").trim();
+
+  const { netPaid } = summarizePayments(booking.payments, booking.totalAmount);
+  if (Number(amount) > Number(netPaid.toString())) {
+    withError(backPath, "refundExceedsPaid");
+  }
 
   await prisma.payment.create({
     data: {

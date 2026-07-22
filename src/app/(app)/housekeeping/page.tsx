@@ -69,33 +69,33 @@ export default async function HousekeepingPage({
           return (
             <div
               key={room.id}
-              className="flex flex-col gap-2 rounded-xl border border-black/10 p-3 dark:border-white/10"
+              className="flex flex-col gap-2 rounded-xl border border-ink/10 p-3 dark:border-sand/10"
             >
               <div className="flex items-center justify-between gap-3">
                 <div>
                   <p className="font-medium">{room.roomNumber}</p>
-                  <p className="text-xs text-black/50 dark:text-white/50">{room.roomType.name}</p>
+                  <p className="text-xs text-ink/50 dark:text-sand/50">{room.roomType.name}</p>
                 </div>
                 <RoomStatusBadge status={room.status} />
               </div>
 
               {needsAttention && task && (
-                <div className="flex items-center justify-between gap-2 rounded-lg bg-black/5 p-2 dark:bg-white/10">
+                <div className="flex items-center justify-between gap-2 rounded-lg bg-ink/5 p-2 dark:bg-sand/10">
                   <div className="text-xs">
                     <p className="font-medium">{task.assignedTo?.name}</p>
                     {task.dueDate && (
-                      <p className="text-black/50 dark:text-white/50">
+                      <p className="text-ink/50 dark:text-sand/50">
                         {t("housekeeping.due")}: {formatFullDate(task.dueDate, locale)}
                       </p>
                     )}
-                    {task.notes && <p className="text-black/70 dark:text-white/70">{task.notes}</p>}
+                    {task.notes && <p className="text-ink/70 dark:text-sand/70">{task.notes}</p>}
                   </div>
                   <form action={updateHousekeepingTaskStatus.bind(null, task.id)}>
                     <AutoSubmitSelect
                       name="status"
                       defaultValue={task.status}
                       options={taskStatusOptions}
-                      className="rounded-full border border-black/15 bg-transparent px-3 py-1.5 text-xs font-medium dark:border-white/20"
+                      className="rounded-full border border-ink/15 bg-transparent px-3 py-1.5 text-xs font-medium dark:border-sand/20"
                     />
                   </form>
                 </div>
@@ -104,13 +104,13 @@ export default async function HousekeepingPage({
               {needsAttention && !task && canAssign && (
                 <form
                   action={assignHousekeepingTask.bind(null, room.id)}
-                  className="flex flex-col gap-2 rounded-lg border border-dashed border-black/15 p-2 dark:border-white/20"
+                  className="flex flex-col gap-2 rounded-lg border border-dashed border-ink/15 p-2 dark:border-sand/20"
                 >
                   <div className="grid grid-cols-2 gap-2">
                     <select
                       name="assignedToId"
                       required
-                      className="rounded-lg border border-black/15 px-2.5 py-2 text-xs dark:border-white/20 dark:bg-white/5"
+                      className="rounded-lg border border-ink/15 px-2.5 py-2 text-xs dark:border-sand/20 dark:bg-sand/5"
                     >
                       <option value="" disabled>
                         {t("housekeeping.chooseStaff")}
@@ -124,12 +124,12 @@ export default async function HousekeepingPage({
                     <input
                       type="date"
                       name="dueDate"
-                      className="rounded-lg border border-black/15 px-2.5 py-2 text-xs dark:border-white/20 dark:bg-white/5"
+                      className="rounded-lg border border-ink/15 px-2.5 py-2 text-xs dark:border-sand/20 dark:bg-sand/5"
                     />
                   </div>
                   <button
                     type="submit"
-                    className="rounded-lg bg-slate-900 px-3 py-2 text-xs font-semibold text-white dark:bg-white dark:text-slate-900"
+                    className="rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-primary-foreground"
                   >
                     {t("housekeeping.assign")}
                   </button>
@@ -137,7 +137,7 @@ export default async function HousekeepingPage({
               )}
 
               {needsAttention && !task && !canAssign && (
-                <p className="text-xs text-black/50 dark:text-white/50">{t("housekeeping.notAssigned")}</p>
+                <p className="text-xs text-ink/50 dark:text-sand/50">{t("housekeeping.notAssigned")}</p>
               )}
             </div>
           );

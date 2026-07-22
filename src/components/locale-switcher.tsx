@@ -9,7 +9,7 @@ export async function LocaleSwitcher() {
 
   return (
     <div
-      className="inline-flex rounded-full border border-black/10 bg-black/5 p-1 text-sm font-medium dark:border-white/15 dark:bg-white/10"
+      className="inline-flex rounded-full border border-ink/10 bg-ink/5 p-1 text-sm font-medium dark:border-sand/15 dark:bg-sand/10"
       aria-label={t("language")}
     >
       {(["bn", "en"] as const).map((loc) => {
@@ -22,8 +22,8 @@ export async function LocaleSwitcher() {
               className={
                 "min-w-[3.5rem] rounded-full px-3 py-1.5 transition-colors " +
                 (isActive
-                  ? "bg-white text-black shadow-sm dark:bg-white dark:text-black"
-                  : "text-black/60 dark:text-white/60")
+                  ? "bg-sand text-ink shadow-sm"
+                  : "text-ink/60 dark:text-sand/60")
               }
               aria-current={isActive}
             >

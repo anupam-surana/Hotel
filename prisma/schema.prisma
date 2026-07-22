@@ -151,11 +151,12 @@ model User {
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 
-  hotel              Hotel              @relation(fields: [hotelId], references: [id], onDelete: Cascade)
-  createdBookings    Booking[]          @relation("BookingCreatedBy")
-  recordedPayments   Payment[]          @relation("PaymentCreatedBy")
-  housekeepingTasks  HousekeepingTask[] @relation("HousekeepingAssignee")
-  verificationToken  VerificationToken?
+  hotel               Hotel                @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  createdBookings     Booking[]            @relation("BookingCreatedBy")
+  recordedPayments    Payment[]            @relation("PaymentCreatedBy")
+  housekeepingTasks   HousekeepingTask[]   @relation("HousekeepingAssignee")
+  verificationToken   VerificationToken?
+  passwordResetToken  PasswordResetToken?
 
   @@index([hotelId])
 }
@@ -163,7 +164,21 @@ model User {
 // Signup requires the owner to verify their email before they can log in
 // (src/auth.ts rejects sign-in while User.emailVerifiedAt is null). One live
 // token per user — resending simply overwrites it via the @unique on userId.
+// Also reused, unmodified, for the staff-invite/accept flow (src/actions/team.ts)
+// — the two flows are distinguished only by which URL the email links to.
 model VerificationToken {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Separate from VerificationToken (different purpose/lifecycle) — one live
+// token per user, same overwrite-on-retry pattern.
+model PasswordResetToken {
   id        String   @id @default(cuid())
   userId    String   @unique
   token     String   @unique

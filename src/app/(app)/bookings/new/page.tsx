@@ -23,7 +23,7 @@ export default async function NewBookingPage({
   });
 
   const inputClass =
-    "w-full rounded-xl border border-black/15 px-4 py-3.5 text-base outline-none focus:border-black/40 dark:border-white/20 dark:bg-white/5 dark:focus:border-white/50";
+    "w-full rounded-xl border border-ink/15 px-4 py-3.5 text-base outline-none focus:border-ink/40 dark:border-sand/20 dark:bg-sand/5 dark:focus:border-sand/50";
 
   return (
     <div className="flex flex-col gap-4">
@@ -31,7 +31,7 @@ export default async function NewBookingPage({
       <FormErrorBanner code={error} />
 
       {roomTypes.length === 0 ? (
-        <p className="rounded-2xl border border-dashed border-black/15 p-6 text-center text-sm text-black/60 dark:border-white/20 dark:text-white/60">
+        <p className="rounded-2xl border border-dashed border-ink/15 p-6 text-center text-sm text-ink/60 dark:border-sand/20 dark:text-sand/60">
           {t("bookings.noRoomTypesYet")}
         </p>
       ) : (
@@ -48,7 +48,7 @@ export default async function NewBookingPage({
               {t("guests.phone")}
             </label>
             <input id="guestPhone" name="guestPhone" type="tel" required maxLength={20} className={inputClass} />
-            <p className="text-xs text-black/50 dark:text-white/50">{t("bookings.phoneMatchHint")}</p>
+            <p className="text-xs text-ink/50 dark:text-sand/50">{t("bookings.phoneMatchHint")}</p>
           </div>
 
           <div className="flex flex-col gap-1.5">
@@ -162,7 +162,7 @@ export default async function NewBookingPage({
 
           <button
             type="submit"
-            className="mt-2 w-full rounded-xl bg-slate-900 px-4 py-3.5 text-base font-semibold text-white dark:bg-white dark:text-slate-900"
+            className="mt-2 w-full rounded-xl bg-primary px-4 py-3.5 text-base font-semibold text-primary-foreground"
           >
             {t("bookings.create")}
           </button>

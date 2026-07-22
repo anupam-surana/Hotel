@@ -2,9 +2,11 @@
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { getLocale } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { requireApiRole } from "@/lib/auth/session";
-import { createBookingAtomic, AvailabilityError, RoomTypeNotFoundError } from "@/lib/availability";
+import { AvailabilityError, RoomTypeNotFoundError } from "@/lib/availability";
+import { resolveGuestAndCreateBooking } from "@/lib/booking-creation";
 import { parseDateKey } from "@/lib/dates";
 import type { BookingSource } from "@/generated/prisma/enums";
 
@@ -52,17 +54,16 @@ export async function createBooking(formData: FormData) {
     ? (sourceRaw as BookingSource)
     : "WALK_IN";
 
-  let guest = await prisma.guest.findFirst({ where: { hotelId: user.hotelId, phone: guestPhone } });
-  if (!guest) {
-    guest = await prisma.guest.create({
-      data: { hotelId: user.hotelId, name: guestName, phone: guestPhone, email: guestEmail || null },
-    });
-  }
+  const locale = await getLocale();
 
   try {
-    const booking = await createBookingAtomic({
+    const booking = await resolveGuestAndCreateBooking({
       hotelId: user.hotelId,
-      guestId: guest.id,
+      hotelName: user.hotelName,
+      hotelSlug: user.hotelSlug,
+      guestName,
+      guestPhone,
+      guestEmail,
       roomTypeId,
       checkIn,
       checkOut,
@@ -72,6 +73,7 @@ export async function createBooking(formData: FormData) {
       source,
       notes: notes || null,
       createdById: user.id,
+      locale,
     });
 
     revalidatePath("/bookings");

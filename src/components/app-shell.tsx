@@ -37,17 +37,17 @@ export async function AppShell({
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="flex items-center justify-between gap-3 border-b border-black/10 px-4 py-3 dark:border-white/10">
+      <header className="flex items-center justify-between gap-3 border-b border-ink/10 px-4 py-3 dark:border-sand/10">
         <div className="min-w-0">
           <p className="truncate text-sm font-semibold">{user.hotelName}</p>
-          <p className="truncate text-xs text-black/50 dark:text-white/50">{user.name}</p>
+          <p className="truncate text-xs text-ink/50 dark:text-sand/50">{user.name}</p>
         </div>
         <div className="flex shrink-0 items-center gap-2">
           <LocaleSwitcher />
           <form action={logout}>
             <button
               type="submit"
-              className="rounded-full border border-black/15 px-3 py-1.5 text-sm font-medium dark:border-white/20"
+              className="rounded-full border border-ink/15 px-3 py-1.5 text-sm font-medium dark:border-sand/20"
             >
               {t("auth.signOut")}
             </button>
@@ -57,7 +57,7 @@ export async function AppShell({
 
       <main className="flex-1 px-4 py-4">{children}</main>
 
-      <nav className="sticky bottom-0 flex border-t border-black/10 bg-white dark:border-white/10 dark:bg-black">
+      <nav className="sticky bottom-0 flex border-t border-ink/10 bg-background dark:border-sand/10">
         {navItems.map((item) => (
           <Link
             key={item.href}

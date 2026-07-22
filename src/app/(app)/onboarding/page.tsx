@@ -19,18 +19,18 @@ function ChecklistItem({
   ctaLabel: string;
 }) {
   return (
-    <div className="flex flex-col gap-2 rounded-xl border border-black/10 p-4 dark:border-white/10">
+    <div className="flex flex-col gap-2 rounded-xl border border-ink/10 p-4 dark:border-sand/10">
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="font-medium">{title}</p>
-          <p className="text-sm text-black/60 dark:text-white/60">{description}</p>
+          <p className="text-sm text-ink/60 dark:text-sand/60">{description}</p>
         </div>
         <span
           className={
             "shrink-0 rounded-full px-2.5 py-1 text-xs font-medium " +
             (done
               ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-300"
-              : "bg-black/5 text-black/60 dark:bg-white/10 dark:text-white/60")
+              : "bg-ink/5 text-ink/60 dark:bg-sand/10 dark:text-sand/60")
           }
         >
           {done ? "✓" : "—"}
@@ -38,7 +38,7 @@ function ChecklistItem({
       </div>
       {!done &&
         (disabled ? (
-          <span className="text-sm font-medium text-black/30 dark:text-white/30">{ctaLabel}</span>
+          <span className="text-sm font-medium text-ink/30 dark:text-sand/30">{ctaLabel}</span>
         ) : (
           <Link href={href} className="text-sm font-medium underline">
             {ctaLabel}
@@ -67,7 +67,7 @@ export default async function OnboardingPage() {
     <div className="flex flex-col gap-6">
       <div>
         <h1 className="text-xl font-bold">{t("title")}</h1>
-        <p className="mt-1 text-sm text-black/60 dark:text-white/60">{t("subtitle")}</p>
+        <p className="mt-1 text-sm text-ink/60 dark:text-sand/60">{t("subtitle")}</p>
       </div>
 
       <div className="flex flex-col gap-3">
@@ -95,9 +95,9 @@ export default async function OnboardingPage() {
         />
       </div>
 
-      <div className="flex flex-col gap-2 rounded-xl border border-black/10 p-4 dark:border-white/10">
+      <div className="flex flex-col gap-2 rounded-xl border border-ink/10 p-4 dark:border-sand/10">
         <p className="font-medium">{t("bookingPageTitle")}</p>
-        <p className="text-sm text-black/60 dark:text-white/60">{t("bookingPageDescription")}</p>
+        <p className="text-sm text-ink/60 dark:text-sand/60">{t("bookingPageDescription")}</p>
         <a
           href={`/h/${user.hotelSlug}`}
           target="_blank"
@@ -110,7 +110,7 @@ export default async function OnboardingPage() {
 
       <Link
         href="/dashboard"
-        className="w-full rounded-xl bg-slate-900 px-4 py-3.5 text-center text-base font-semibold text-white dark:bg-white dark:text-slate-900"
+        className="w-full rounded-xl bg-primary px-4 py-3.5 text-center text-base font-semibold text-primary-foreground"
       >
         {t("goToDashboard")}
       </Link>

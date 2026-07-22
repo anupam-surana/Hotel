@@ -36,7 +36,7 @@ export default async function GuestsPage({
         <h1 className="text-xl font-bold">{tg("title")}</h1>
         <Link
           href="/guests/new"
-          className="rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white dark:bg-white dark:text-slate-900"
+          className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
         >
           {tg("addGuest")}
         </Link>
@@ -48,18 +48,18 @@ export default async function GuestsPage({
           name="q"
           defaultValue={q ?? ""}
           placeholder={tg("searchPlaceholder")}
-          className="w-full rounded-xl border border-black/15 px-4 py-3 text-base outline-none focus:border-black/40 dark:border-white/20 dark:bg-white/5 dark:focus:border-white/50"
+          className="w-full rounded-xl border border-ink/15 px-4 py-3 text-base outline-none focus:border-ink/40 dark:border-sand/20 dark:bg-sand/5 dark:focus:border-sand/50"
         />
         <button
           type="submit"
-          className="shrink-0 rounded-xl border border-black/15 px-4 py-3 text-sm font-medium dark:border-white/20"
+          className="shrink-0 rounded-xl border border-ink/15 px-4 py-3 text-sm font-medium dark:border-sand/20"
         >
           {t("common.search")}
         </button>
       </form>
 
       {guests.length === 0 && (
-        <p className="rounded-2xl border border-dashed border-black/15 p-6 text-center text-sm text-black/60 dark:border-white/20 dark:text-white/60">
+        <p className="rounded-2xl border border-dashed border-ink/15 p-6 text-center text-sm text-ink/60 dark:border-sand/20 dark:text-sand/60">
           {q ? tg("noResults") : tg("noGuests")}
         </p>
       )}
@@ -69,11 +69,11 @@ export default async function GuestsPage({
           <Link
             key={guest.id}
             href={`/guests/${guest.id}`}
-            className="flex items-center justify-between gap-3 rounded-xl border border-black/10 p-3 dark:border-white/10"
+            className="flex items-center justify-between gap-3 rounded-xl border border-ink/10 p-3 dark:border-sand/10"
           >
             <div className="min-w-0">
               <p className="truncate font-medium">{guest.name}</p>
-              <p className="text-sm text-black/60 dark:text-white/60">{guest.phone}</p>
+              <p className="text-sm text-ink/60 dark:text-sand/60">{guest.phone}</p>
             </div>
             {guest._count.bookings > 1 && (
               <span className="shrink-0 rounded-full bg-blue-100 px-2.5 py-1 text-xs font-medium text-blue-800 dark:bg-blue-500/15 dark:text-blue-300">

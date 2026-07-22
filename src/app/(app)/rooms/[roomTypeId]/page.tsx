@@ -76,7 +76,7 @@ export default async function RoomTypeDetailPage({
                 required
                 maxLength={100}
                 defaultValue={roomType.name}
-                className="w-full rounded-xl border border-black/15 px-4 py-3.5 text-base outline-none focus:border-black/40 dark:border-white/20 dark:bg-white/5 dark:focus:border-white/50"
+                className="w-full rounded-xl border border-ink/15 px-4 py-3.5 text-base outline-none focus:border-ink/40 dark:border-sand/20 dark:bg-sand/5 dark:focus:border-sand/50"
               />
             </div>
 
@@ -90,7 +90,7 @@ export default async function RoomTypeDetailPage({
                 maxLength={1000}
                 rows={3}
                 defaultValue={roomType.description ?? ""}
-                className="w-full rounded-xl border border-black/15 px-4 py-3.5 text-base outline-none focus:border-black/40 dark:border-white/20 dark:bg-white/5 dark:focus:border-white/50"
+                className="w-full rounded-xl border border-ink/15 px-4 py-3.5 text-base outline-none focus:border-ink/40 dark:border-sand/20 dark:bg-sand/5 dark:focus:border-sand/50"
               />
             </div>
 
@@ -108,7 +108,7 @@ export default async function RoomTypeDetailPage({
                   max={20}
                   required
                   defaultValue={roomType.maxAdults}
-                  className="w-full rounded-xl border border-black/15 px-4 py-3.5 text-base outline-none focus:border-black/40 dark:border-white/20 dark:bg-white/5 dark:focus:border-white/50"
+                  className="w-full rounded-xl border border-ink/15 px-4 py-3.5 text-base outline-none focus:border-ink/40 dark:border-sand/20 dark:bg-sand/5 dark:focus:border-sand/50"
                 />
               </div>
               <div className="flex flex-col gap-1.5">
@@ -124,7 +124,7 @@ export default async function RoomTypeDetailPage({
                   max={20}
                   required
                   defaultValue={roomType.maxChildren}
-                  className="w-full rounded-xl border border-black/15 px-4 py-3.5 text-base outline-none focus:border-black/40 dark:border-white/20 dark:bg-white/5 dark:focus:border-white/50"
+                  className="w-full rounded-xl border border-ink/15 px-4 py-3.5 text-base outline-none focus:border-ink/40 dark:border-sand/20 dark:bg-sand/5 dark:focus:border-sand/50"
                 />
               </div>
             </div>
@@ -142,7 +142,7 @@ export default async function RoomTypeDetailPage({
                 step="0.01"
                 required
                 defaultValue={roomType.basePrice.toString()}
-                className="w-full rounded-xl border border-black/15 px-4 py-3.5 text-base outline-none focus:border-black/40 dark:border-white/20 dark:bg-white/5 dark:focus:border-white/50"
+                className="w-full rounded-xl border border-ink/15 px-4 py-3.5 text-base outline-none focus:border-ink/40 dark:border-sand/20 dark:bg-sand/5 dark:focus:border-sand/50"
               />
             </div>
 
@@ -157,14 +157,14 @@ export default async function RoomTypeDetailPage({
                 maxLength={2000}
                 defaultValue={roomType.photos[0] ?? ""}
                 placeholder={t("roomType.photoUrlPlaceholder")}
-                className="w-full rounded-xl border border-black/15 px-4 py-3.5 text-base outline-none focus:border-black/40 dark:border-white/20 dark:bg-white/5 dark:focus:border-white/50"
+                className="w-full rounded-xl border border-ink/15 px-4 py-3.5 text-base outline-none focus:border-ink/40 dark:border-sand/20 dark:bg-sand/5 dark:focus:border-sand/50"
               />
-              <p className="text-xs text-black/50 dark:text-white/50">{t("roomType.photoUrlHint")}</p>
+              <p className="text-xs text-ink/50 dark:text-sand/50">{t("roomType.photoUrlHint")}</p>
             </div>
 
             <button
               type="submit"
-              className="mt-2 w-full rounded-xl bg-slate-900 px-4 py-3.5 text-base font-semibold text-white dark:bg-white dark:text-slate-900"
+              className="mt-2 w-full rounded-xl bg-primary px-4 py-3.5 text-base font-semibold text-primary-foreground"
             >
               {t("roomType.saveChanges")}
             </button>
@@ -182,7 +182,7 @@ export default async function RoomTypeDetailPage({
       ) : (
         <div>
           <h1 className="text-xl font-bold">{roomType.name}</h1>
-          <p className="text-sm text-black/60 dark:text-white/60">
+          <p className="text-sm text-ink/60 dark:text-sand/60">
             {t("rooms.capacity", { adults: roomType.maxAdults, children: roomType.maxChildren })} ·{" "}
             {formatCurrency(roomType.basePrice.toString(), locale)} {t("rooms.perNight")}
           </p>
@@ -193,19 +193,19 @@ export default async function RoomTypeDetailPage({
         <h2 className="font-semibold">{t("roomType.roomsHeading")}</h2>
 
         {roomType.rooms.length === 0 && (
-          <p className="text-sm text-black/60 dark:text-white/60">{t("room.noRooms")}</p>
+          <p className="text-sm text-ink/60 dark:text-sand/60">{t("room.noRooms")}</p>
         )}
 
         <div className="flex flex-col gap-2">
           {roomType.rooms.map((room) => (
             <div
               key={room.id}
-              className="flex items-center justify-between gap-3 rounded-xl border border-black/10 p-3 dark:border-white/10"
+              className="flex items-center justify-between gap-3 rounded-xl border border-ink/10 p-3 dark:border-sand/10"
             >
               <div>
                 <p className="font-medium">{room.roomNumber}</p>
                 {room.floor && (
-                  <p className="text-xs text-black/50 dark:text-white/50">{room.floor}</p>
+                  <p className="text-xs text-ink/50 dark:text-sand/50">{room.floor}</p>
                 )}
               </div>
 
@@ -217,7 +217,7 @@ export default async function RoomTypeDetailPage({
                     name="status"
                     defaultValue={room.status}
                     options={statusOptions}
-                    className="rounded-full border border-black/15 bg-transparent px-3 py-1.5 text-xs font-medium dark:border-white/20"
+                    className="rounded-full border border-ink/15 bg-transparent px-3 py-1.5 text-xs font-medium dark:border-sand/20"
                   />
                 </form>
 
@@ -239,7 +239,7 @@ export default async function RoomTypeDetailPage({
         {canManage && (
           <form
             action={createRoom.bind(null, roomType.id)}
-            className="flex items-end gap-2 rounded-xl border border-dashed border-black/15 p-3 dark:border-white/20"
+            className="flex items-end gap-2 rounded-xl border border-dashed border-ink/15 p-3 dark:border-sand/20"
           >
             <div className="flex flex-1 flex-col gap-1.5">
               <label htmlFor="roomNumber" className="text-xs font-medium">
@@ -251,7 +251,7 @@ export default async function RoomTypeDetailPage({
                 required
                 maxLength={20}
                 placeholder={t("room.roomNumberPlaceholder")}
-                className="w-full rounded-lg border border-black/15 px-3 py-2.5 text-sm outline-none focus:border-black/40 dark:border-white/20 dark:bg-white/5"
+                className="w-full rounded-lg border border-ink/15 px-3 py-2.5 text-sm outline-none focus:border-ink/40 dark:border-sand/20 dark:bg-sand/5"
               />
             </div>
             <div className="flex flex-1 flex-col gap-1.5">
@@ -262,12 +262,12 @@ export default async function RoomTypeDetailPage({
                 id="floor"
                 name="floor"
                 maxLength={20}
-                className="w-full rounded-lg border border-black/15 px-3 py-2.5 text-sm outline-none focus:border-black/40 dark:border-white/20 dark:bg-white/5"
+                className="w-full rounded-lg border border-ink/15 px-3 py-2.5 text-sm outline-none focus:border-ink/40 dark:border-sand/20 dark:bg-sand/5"
               />
             </div>
             <button
               type="submit"
-              className="rounded-lg bg-slate-900 px-3 py-2.5 text-sm font-semibold text-white dark:bg-white dark:text-slate-900"
+              className="rounded-lg bg-primary px-3 py-2.5 text-sm font-semibold text-primary-foreground"
             >
               {t("room.addRoom")}
             </button>
@@ -278,13 +278,13 @@ export default async function RoomTypeDetailPage({
       {canManage && (
         <div className="flex flex-col gap-3">
           <h2 className="font-semibold">{t("channels.title")}</h2>
-          <p className="text-xs text-black/50 dark:text-white/50">{t("channels.disclaimer")}</p>
+          <p className="text-xs text-ink/50 dark:text-sand/50">{t("channels.disclaimer")}</p>
 
           <div className="flex flex-col gap-2">
             {roomType.channelConnections.map((connection) => (
               <div
                 key={connection.id}
-                className="flex flex-col gap-2 rounded-xl border border-black/10 p-3 dark:border-white/10"
+                className="flex flex-col gap-2 rounded-xl border border-ink/10 p-3 dark:border-sand/10"
               >
                 <div className="flex items-center justify-between gap-3">
                   <p className="font-medium">{tChannelType(connection.channel)}</p>
@@ -296,7 +296,7 @@ export default async function RoomTypeDetailPage({
                         ? "bg-red-100 text-red-800 dark:bg-red-500/15 dark:text-red-300"
                         : connection.lastSyncedAt
                           ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-300"
-                          : "bg-black/5 text-black/60 dark:bg-white/10 dark:text-white/60")
+                          : "bg-ink/5 text-ink/60 dark:bg-sand/10 dark:text-sand/60")
                     }
                   >
                     {connection.lastSyncStatus === "ERROR"
@@ -308,7 +308,7 @@ export default async function RoomTypeDetailPage({
                 </div>
 
                 {connection.lastSyncedAt && (
-                  <p className="text-xs text-black/50 dark:text-white/50">
+                  <p className="text-xs text-ink/50 dark:text-sand/50">
                     {t("channels.lastSynced")}: {formatFullDate(connection.lastSyncedAt, locale)}
                   </p>
                 )}
@@ -320,7 +320,7 @@ export default async function RoomTypeDetailPage({
                   <form action={syncChannelNow.bind(null, roomType.id, connection.id)}>
                     <button
                       type="submit"
-                      className="rounded-full border border-black/15 px-3 py-1.5 text-xs font-medium dark:border-white/20"
+                      className="rounded-full border border-ink/15 px-3 py-1.5 text-xs font-medium dark:border-sand/20"
                     >
                       {t("channels.syncNow")}
                     </button>
@@ -329,7 +329,7 @@ export default async function RoomTypeDetailPage({
 
                 <div>
                   <p className="text-xs font-medium">{t("channels.exportFeedLabel")}</p>
-                  <p className="break-all text-xs text-black/60 dark:text-white/60">
+                  <p className="break-all text-xs text-ink/60 dark:text-sand/60">
                     {origin}/api/ical/{connection.icalExportToken}
                   </p>
                 </div>
@@ -349,13 +349,13 @@ export default async function RoomTypeDetailPage({
           {availableChannelsToAdd.length > 0 && (
             <form
               action={connectChannel.bind(null, roomType.id)}
-              className="flex flex-col gap-2 rounded-xl border border-dashed border-black/15 p-3 dark:border-white/20"
+              className="flex flex-col gap-2 rounded-xl border border-dashed border-ink/15 p-3 dark:border-sand/20"
             >
               <select
                 name="channel"
                 required
                 defaultValue=""
-                className="rounded-lg border border-black/15 px-3 py-2.5 text-sm dark:border-white/20 dark:bg-white/5"
+                className="rounded-lg border border-ink/15 px-3 py-2.5 text-sm dark:border-sand/20 dark:bg-sand/5"
               >
                 <option value="" disabled>
                   {t("channels.chooseChannel")}
@@ -370,11 +370,11 @@ export default async function RoomTypeDetailPage({
                 type="url"
                 name="icalImportUrl"
                 placeholder={t("channels.importUrlPlaceholder")}
-                className="rounded-lg border border-black/15 px-3 py-2.5 text-sm dark:border-white/20 dark:bg-white/5"
+                className="rounded-lg border border-ink/15 px-3 py-2.5 text-sm dark:border-sand/20 dark:bg-sand/5"
               />
               <button
                 type="submit"
-                className="rounded-lg bg-slate-900 px-3 py-2.5 text-sm font-semibold text-white dark:bg-white dark:text-slate-900"
+                className="rounded-lg bg-primary px-3 py-2.5 text-sm font-semibold text-primary-foreground"
               >
                 {t("channels.connect")}
               </button>

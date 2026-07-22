@@ -48,7 +48,7 @@ export default async function BookingsPage({
         <h1 className="text-xl font-bold">{t("bookings.title")}</h1>
         <Link
           href="/bookings/new"
-          className="rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white dark:bg-white dark:text-slate-900"
+          className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
         >
           {t("frontDesk.newBooking")}
         </Link>
@@ -59,7 +59,7 @@ export default async function BookingsPage({
           <select
             name="status"
             defaultValue={status ?? ""}
-            className="rounded-xl border border-black/15 px-3 py-2.5 text-sm dark:border-white/20 dark:bg-white/5"
+            className="rounded-xl border border-ink/15 px-3 py-2.5 text-sm dark:border-sand/20 dark:bg-sand/5"
           >
             <option value="">{t("bookings.allStatuses")}</option>
             {STATUSES.map((s) => (
@@ -71,7 +71,7 @@ export default async function BookingsPage({
           <select
             name="source"
             defaultValue={source ?? ""}
-            className="rounded-xl border border-black/15 px-3 py-2.5 text-sm dark:border-white/20 dark:bg-white/5"
+            className="rounded-xl border border-ink/15 px-3 py-2.5 text-sm dark:border-sand/20 dark:bg-sand/5"
           >
             <option value="">{t("bookings.allSources")}</option>
             {SOURCES.map((s) => (
@@ -86,25 +86,25 @@ export default async function BookingsPage({
             type="date"
             name="from"
             defaultValue={from ?? ""}
-            className="rounded-xl border border-black/15 px-3 py-2.5 text-sm dark:border-white/20 dark:bg-white/5"
+            className="rounded-xl border border-ink/15 px-3 py-2.5 text-sm dark:border-sand/20 dark:bg-sand/5"
           />
           <input
             type="date"
             name="to"
             defaultValue={to ?? ""}
-            className="rounded-xl border border-black/15 px-3 py-2.5 text-sm dark:border-white/20 dark:bg-white/5"
+            className="rounded-xl border border-ink/15 px-3 py-2.5 text-sm dark:border-sand/20 dark:bg-sand/5"
           />
         </div>
         <button
           type="submit"
-          className="rounded-xl border border-black/15 px-4 py-2.5 text-sm font-medium dark:border-white/20"
+          className="rounded-xl border border-ink/15 px-4 py-2.5 text-sm font-medium dark:border-sand/20"
         >
           {t("common.search")}
         </button>
       </form>
 
       {bookings.length === 0 && (
-        <p className="rounded-2xl border border-dashed border-black/15 p-6 text-center text-sm text-black/60 dark:border-white/20 dark:text-white/60">
+        <p className="rounded-2xl border border-dashed border-ink/15 p-6 text-center text-sm text-ink/60 dark:border-sand/20 dark:text-sand/60">
           {t("bookings.noBookings")}
         </p>
       )}
@@ -114,12 +114,12 @@ export default async function BookingsPage({
           <Link
             key={booking.id}
             href={`/bookings/${booking.id}`}
-            className="flex flex-col gap-2 rounded-xl border border-black/10 p-3 dark:border-white/10"
+            className="flex flex-col gap-2 rounded-xl border border-ink/10 p-3 dark:border-sand/10"
           >
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <p className="truncate font-medium">{booking.guest.name}</p>
-                <p className="text-sm text-black/60 dark:text-white/60">
+                <p className="text-sm text-ink/60 dark:text-sand/60">
                   {new Intl.DateTimeFormat(locale === "bn" ? "bn-IN" : "en-IN", {
                     day: "numeric",
                     month: "short",
@@ -143,7 +143,7 @@ export default async function BookingsPage({
                 booking.status === "CHECKED_OUT") && (
                 <PaymentStatusBadge status={summarizePayments(booking.payments, booking.totalAmount).status} />
               )}
-              <span className="text-xs text-black/50 dark:text-white/50">
+              <span className="text-xs text-ink/50 dark:text-sand/50">
                 {booking.bookingRooms[0]?.roomType.name}
                 {booking.bookingRooms.length > 1 ? ` ×${booking.bookingRooms.length}` : ""}
               </span>

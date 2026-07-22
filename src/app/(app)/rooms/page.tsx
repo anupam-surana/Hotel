@@ -26,7 +26,7 @@ export default async function RoomsPage() {
         {canManage && (
           <Link
             href="/rooms/new"
-            className="rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white dark:bg-white dark:text-slate-900"
+            className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
           >
             {t("rooms.addRoomType")}
           </Link>
@@ -34,7 +34,7 @@ export default async function RoomsPage() {
       </div>
 
       {roomTypes.length === 0 && (
-        <p className="rounded-2xl border border-dashed border-black/15 p-6 text-center text-sm text-black/60 dark:border-white/20 dark:text-white/60">
+        <p className="rounded-2xl border border-dashed border-ink/15 p-6 text-center text-sm text-ink/60 dark:border-sand/20 dark:text-sand/60">
           {t("rooms.noRoomTypes")}
         </p>
       )}
@@ -44,12 +44,12 @@ export default async function RoomsPage() {
           <Link
             key={roomType.id}
             href={`/rooms/${roomType.id}`}
-            className="flex flex-col gap-3 rounded-2xl border border-black/10 p-4 dark:border-white/10"
+            className="flex flex-col gap-3 rounded-2xl border border-ink/10 p-4 dark:border-sand/10"
           >
             <div className="flex items-start justify-between gap-3">
               <div>
                 <p className="font-semibold">{roomType.name}</p>
-                <p className="text-sm text-black/60 dark:text-white/60">
+                <p className="text-sm text-ink/60 dark:text-sand/60">
                   {t("rooms.capacity", {
                     adults: roomType.maxAdults,
                     children: roomType.maxChildren,
@@ -58,12 +58,12 @@ export default async function RoomsPage() {
               </div>
               <div className="text-right">
                 <p className="font-semibold">{formatCurrency(roomType.basePrice.toString(), locale)}</p>
-                <p className="text-xs text-black/50 dark:text-white/50">{t("rooms.perNight")}</p>
+                <p className="text-xs text-ink/50 dark:text-sand/50">{t("rooms.perNight")}</p>
               </div>
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs font-medium text-black/50 dark:text-white/50">
+              <span className="text-xs font-medium text-ink/50 dark:text-sand/50">
                 {t("rooms.roomsCount", { count: roomType.rooms.length })}
               </span>
               {roomType.rooms.map((room) => (

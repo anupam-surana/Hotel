@@ -32,7 +32,7 @@ export default async function FrontDeskPage() {
         <h1 className="text-xl font-bold">{t("title")}</h1>
         <Link
           href="/bookings/new"
-          className="rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white dark:bg-white dark:text-slate-900"
+          className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
         >
           {t("newBooking")}
         </Link>
@@ -41,18 +41,18 @@ export default async function FrontDeskPage() {
       <section className="flex flex-col gap-3">
         <h2 className="font-semibold">{t("arrivals")}</h2>
         {arrivals.length === 0 && (
-          <p className="text-sm text-black/60 dark:text-white/60">{t("noArrivals")}</p>
+          <p className="text-sm text-ink/60 dark:text-sand/60">{t("noArrivals")}</p>
         )}
         <div className="flex flex-col gap-2">
           {arrivals.map((booking) => (
             <Link
               key={booking.id}
               href={`/bookings/${booking.id}`}
-              className="flex items-center justify-between gap-3 rounded-xl border border-black/10 p-3 dark:border-white/10"
+              className="flex items-center justify-between gap-3 rounded-xl border border-ink/10 p-3 dark:border-sand/10"
             >
               <div className="min-w-0">
                 <p className="truncate font-medium">{booking.guest.name}</p>
-                <p className="text-sm text-black/60 dark:text-white/60">
+                <p className="text-sm text-ink/60 dark:text-sand/60">
                   {booking.bookingRooms[0]?.roomType.name}
                   {booking.bookingRooms.length > 1 ? ` ×${booking.bookingRooms.length}` : ""} ·{" "}
                   {formatCurrency(booking.totalAmount.toString(), locale)}
@@ -67,18 +67,18 @@ export default async function FrontDeskPage() {
       <section className="flex flex-col gap-3">
         <h2 className="font-semibold">{t("departures")}</h2>
         {departures.length === 0 && (
-          <p className="text-sm text-black/60 dark:text-white/60">{t("noDepartures")}</p>
+          <p className="text-sm text-ink/60 dark:text-sand/60">{t("noDepartures")}</p>
         )}
         <div className="flex flex-col gap-2">
           {departures.map((booking) => (
             <Link
               key={booking.id}
               href={`/bookings/${booking.id}`}
-              className="flex items-center justify-between gap-3 rounded-xl border border-black/10 p-3 dark:border-white/10"
+              className="flex items-center justify-between gap-3 rounded-xl border border-ink/10 p-3 dark:border-sand/10"
             >
               <div className="min-w-0">
                 <p className="truncate font-medium">{booking.guest.name}</p>
-                <p className="text-sm text-black/60 dark:text-white/60">
+                <p className="text-sm text-ink/60 dark:text-sand/60">
                   {booking.bookingRooms[0]?.roomType.name}
                   {booking.bookingRooms.length > 1 ? ` ×${booking.bookingRooms.length}` : ""} ·{" "}
                   {formatCurrency(booking.totalAmount.toString(), locale)}

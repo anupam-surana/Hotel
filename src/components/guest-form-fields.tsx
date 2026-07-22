@@ -17,7 +17,7 @@ export async function GuestFormFields({
 }) {
   const t = await getTranslations();
   const inputClass =
-    "w-full rounded-xl border border-black/15 px-4 py-3.5 text-base outline-none focus:border-black/40 dark:border-white/20 dark:bg-white/5 dark:focus:border-white/50";
+    "w-full rounded-xl border border-ink/15 px-4 py-3.5 text-base outline-none focus:border-ink/40 dark:border-sand/20 dark:bg-sand/5 dark:focus:border-sand/50";
 
   return (
     <>

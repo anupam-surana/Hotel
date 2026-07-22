@@ -20,7 +20,7 @@ export async function LockedSubscriptionScreen({
       <LocaleSwitcher />
       <div className="w-full max-w-sm">
         <h1 className="text-xl font-bold">{expired ? t("trialEndedTitle") : t("lockedTitle")}</h1>
-        <p className="mt-2 text-sm text-black/60 dark:text-white/60">
+        <p className="mt-2 text-sm text-ink/60 dark:text-sand/60">
           {user.role === "OWNER" ? t("ownerLockedBody", { hotelName: user.hotelName }) : t("staffLockedBody")}
         </p>
 
@@ -28,7 +28,7 @@ export async function LockedSubscriptionScreen({
           <form action={startSubscription} className="mt-6">
             <button
               type="submit"
-              className="w-full rounded-xl bg-slate-900 px-4 py-3.5 text-base font-semibold text-white dark:bg-white dark:text-slate-900"
+              className="w-full rounded-xl bg-primary px-4 py-3.5 text-base font-semibold text-primary-foreground"
             >
               {t("subscribeCta")}
             </button>
@@ -38,7 +38,7 @@ export async function LockedSubscriptionScreen({
         <form action={logout} className="mt-3">
           <button
             type="submit"
-            className="w-full rounded-xl border border-black/15 px-4 py-3.5 text-base font-semibold dark:border-white/20"
+            className="w-full rounded-xl border border-ink/15 px-4 py-3.5 text-base font-semibold dark:border-sand/20"
           >
             {t("signOut")}
           </button>

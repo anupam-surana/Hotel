@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { createHotelAccount } from "@/actions/signup";
 
 const inputClass =
-  "w-full rounded-xl border border-black/15 px-4 py-3.5 text-base outline-none focus:border-black/40 dark:border-white/20 dark:bg-white/5 dark:focus:border-white/50";
+  "w-full rounded-xl border border-ink/15 px-4 py-3.5 text-base outline-none focus:border-ink/40 dark:border-sand/20 dark:bg-sand/5 dark:focus:border-sand/50";
 
 export async function SignupForm() {
   const t = await getTranslations("signup");
@@ -109,7 +109,7 @@ export async function SignupForm() {
             minLength={8}
             className={inputClass}
           />
-          <p className="text-xs text-black/50 dark:text-white/50">{t("passwordHint")}</p>
+          <p className="text-xs text-ink/50 dark:text-sand/50">{t("passwordHint")}</p>
         </div>
 
         <div className="flex flex-col gap-1.5">
@@ -130,7 +130,7 @@ export async function SignupForm() {
 
       <button
         type="submit"
-        className="w-full rounded-xl bg-slate-900 px-4 py-3.5 text-base font-semibold text-white dark:bg-white dark:text-slate-900"
+        className="w-full rounded-xl bg-primary px-4 py-3.5 text-base font-semibold text-primary-foreground"
       >
         {t("createAccount")}
       </button>

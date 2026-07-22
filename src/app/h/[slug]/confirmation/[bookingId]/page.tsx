@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
@@ -56,18 +57,18 @@ export default async function PublicBookingConfirmationPage({
 
         <FormErrorBanner code={error} />
 
-        <div className="mb-6 flex flex-col gap-3 rounded-2xl border border-black/10 p-4 dark:border-white/10">
+        <div className="mb-6 flex flex-col gap-3 rounded-2xl border border-ink/10 p-4 dark:border-sand/10">
           <div className="flex items-start justify-between gap-3">
             <div>
               <p className="font-semibold">{booking.guest.name}</p>
-              <p className="text-sm text-black/60 dark:text-white/60">
+              <p className="text-sm text-ink/60 dark:text-sand/60">
                 {booking.bookingRooms[0]?.roomType.name}
                 {booking.bookingRooms.length > 1 ? ` × ${booking.bookingRooms.length}` : ""}
               </p>
             </div>
             <PaymentStatusBadge status={paymentStatus} />
           </div>
-          <p className="text-sm text-black/70 dark:text-white/70">
+          <p className="text-sm text-ink/70 dark:text-sand/70">
             {formatFullDate(booking.checkIn, locale)} → {formatFullDate(booking.checkOut, locale)}
           </p>
           <p className="font-semibold">{formatCurrency(booking.totalAmount.toString(), locale)}</p>
@@ -76,13 +77,13 @@ export default async function PublicBookingConfirmationPage({
         {canPayOnline && (
           <form
             action={generatePublicPaymentLink.bind(null, slug, booking.id)}
-            className="mb-6 flex flex-col gap-2 rounded-2xl border border-black/10 p-4 dark:border-white/10"
+            className="mb-6 flex flex-col gap-2 rounded-2xl border border-ink/10 p-4 dark:border-sand/10"
           >
             <p className="text-sm font-medium">{t("public.payOnline")}</p>
             <input type="hidden" name="amount" value={balanceDue.toString()} />
             <button
               type="submit"
-              className="rounded-xl bg-slate-900 px-4 py-3.5 text-base font-semibold text-white dark:bg-white dark:text-slate-900"
+              className="rounded-xl bg-primary px-4 py-3.5 text-base font-semibold text-primary-foreground"
             >
               {t("public.payNow")} · {formatCurrency(balanceDue.toString(), locale)}
             </button>
@@ -90,7 +91,7 @@ export default async function PublicBookingConfirmationPage({
         )}
 
         {pendingLink?.razorpayShortUrl && (
-          <p className="mb-6 text-center text-sm text-black/60 dark:text-white/60">
+          <p className="mb-6 text-center text-sm text-ink/60 dark:text-sand/60">
             <a href={pendingLink.razorpayShortUrl} className="underline">
               {t("public.continuePayment")}
             </a>
@@ -98,12 +99,18 @@ export default async function PublicBookingConfirmationPage({
         )}
 
         {(hotel.phone || hotel.email) && (
-          <div className="text-center text-sm text-black/60 dark:text-white/60">
+          <div className="mb-6 text-center text-sm text-ink/60 dark:text-sand/60">
             <p>{t("public.questionsContact")}</p>
             {hotel.phone && <p>{hotel.phone}</p>}
             {hotel.email && <p>{hotel.email}</p>}
           </div>
         )}
+
+        <p className="text-center text-sm">
+          <Link href={`/h/${slug}/my-booking?bookingId=${booking.id}`} className="font-medium underline">
+            {t("public.findMyBooking")}
+          </Link>
+        </p>
       </main>
     </div>
   );

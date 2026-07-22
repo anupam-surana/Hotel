@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { requireRole } from "@/lib/auth/session";
@@ -23,7 +24,7 @@ export default async function SettingsPage({
   ]);
 
   const inputClass =
-    "w-full rounded-xl border border-black/15 px-4 py-3.5 text-base outline-none focus:border-black/40 dark:border-white/20 dark:bg-white/5 dark:focus:border-white/50";
+    "w-full rounded-xl border border-ink/15 px-4 py-3.5 text-base outline-none focus:border-ink/40 dark:border-sand/20 dark:bg-sand/5 dark:focus:border-sand/50";
 
   const canReSubscribe =
     !subscription || subscription.status === "CANCELLED" || subscription.status === "EXPIRED";
@@ -37,13 +38,13 @@ export default async function SettingsPage({
       <div className="flex flex-col gap-3">
         <div>
           <h2 className="font-semibold">{t("subscription.settingsTitle")}</h2>
-          <p className="text-sm text-black/60 dark:text-white/60">{t("subscription.settingsDescription")}</p>
+          <p className="text-sm text-ink/60 dark:text-sand/60">{t("subscription.settingsDescription")}</p>
         </div>
 
         {subscription && (
-          <div className="flex flex-col gap-1 rounded-2xl border border-black/10 p-4 dark:border-white/10">
+          <div className="flex flex-col gap-1 rounded-2xl border border-ink/10 p-4 dark:border-sand/10">
             <p className="text-sm font-medium">{t(`subscription.status.${subscription.status}`)}</p>
-            <p className="text-xs text-black/50 dark:text-white/50">
+            <p className="text-xs text-ink/50 dark:text-sand/50">
               {t("subscription.renewsOn")}: {formatFullDate(subscription.currentPeriodEnd, locale)}
             </p>
           </div>
@@ -53,7 +54,7 @@ export default async function SettingsPage({
           <form action={startSubscription}>
             <button
               type="submit"
-              className="w-full rounded-xl bg-slate-900 px-4 py-3.5 text-base font-semibold text-white dark:bg-white dark:text-slate-900"
+              className="w-full rounded-xl bg-primary px-4 py-3.5 text-base font-semibold text-primary-foreground"
             >
               {t("subscription.subscribeCta")}
             </button>
@@ -74,21 +75,32 @@ export default async function SettingsPage({
 
       <div className="flex flex-col gap-2">
         <h2 className="font-semibold">{t("settings.bookingPageTitle")}</h2>
-        <p className="text-sm text-black/60 dark:text-white/60">{t("settings.bookingPageDescription")}</p>
+        <p className="text-sm text-ink/60 dark:text-sand/60">{t("settings.bookingPageDescription")}</p>
         <a
           href={`/h/${user.hotelSlug}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="break-all rounded-xl border border-black/15 px-4 py-3 text-sm font-medium underline dark:border-white/20"
+          className="break-all rounded-xl border border-ink/15 px-4 py-3 text-sm font-medium underline dark:border-sand/20"
         >
           /h/{user.hotelSlug}
         </a>
       </div>
 
+      <div className="flex flex-col gap-2">
+        <h2 className="font-semibold">{t("team.settingsTitle")}</h2>
+        <p className="text-sm text-ink/60 dark:text-sand/60">{t("team.settingsDescription")}</p>
+        <Link
+          href="/settings/team"
+          className="rounded-xl border border-ink/15 px-4 py-3 text-sm font-medium underline dark:border-sand/20"
+        >
+          {t("team.manageTeam")}
+        </Link>
+      </div>
+
       <div className="flex flex-col gap-3">
         <div>
           <h2 className="font-semibold">{t("settings.razorpayTitle")}</h2>
-          <p className="text-sm text-black/60 dark:text-white/60">{t("settings.razorpayDescription")}</p>
+          <p className="text-sm text-ink/60 dark:text-sand/60">{t("settings.razorpayDescription")}</p>
         </div>
 
         {razorpaySettings ? (
@@ -96,7 +108,7 @@ export default async function SettingsPage({
             <p className="text-sm font-medium text-emerald-800 dark:text-emerald-300">
               {t("settings.connected")}
             </p>
-            <p className="text-sm text-black/70 dark:text-white/70">
+            <p className="text-sm text-ink/70 dark:text-sand/70">
               {t("settings.keyIdLabel")}: <span className="font-mono">{razorpaySettings.keyId}</span>
             </p>
             <form action={disconnectRazorpay}>
@@ -124,7 +136,7 @@ export default async function SettingsPage({
             </div>
             <button
               type="submit"
-              className="mt-2 w-full rounded-xl bg-slate-900 px-4 py-3.5 text-base font-semibold text-white dark:bg-white dark:text-slate-900"
+              className="mt-2 w-full rounded-xl bg-primary px-4 py-3.5 text-base font-semibold text-primary-foreground"
             >
               {t("settings.connect")}
             </button>

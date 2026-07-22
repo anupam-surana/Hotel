@@ -53,18 +53,18 @@ export default async function PublicBookingFormPage({
 
   const defaultQuantity = Math.min(Math.max(Number(quantityStr) || 1, 1), quote.available);
   const inputClass =
-    "w-full rounded-xl border border-black/15 px-4 py-3.5 text-base outline-none focus:border-black/40 dark:border-white/20 dark:bg-white/5 dark:focus:border-white/50";
+    "w-full rounded-xl border border-ink/15 px-4 py-3.5 text-base outline-none focus:border-ink/40 dark:border-sand/20 dark:bg-sand/5 dark:focus:border-sand/50";
 
   return (
     <div className="flex min-h-screen flex-col">
       <PublicHeader hotelName={hotel.name} />
       <main className="flex-1 px-4 py-4">
-        <div className="mb-6 rounded-2xl border border-black/10 p-4 dark:border-white/10">
+        <div className="mb-6 rounded-2xl border border-ink/10 p-4 dark:border-sand/10">
           <p className="font-semibold">{roomType.name}</p>
-          <p className="text-sm text-black/60 dark:text-white/60">
+          <p className="text-sm text-ink/60 dark:text-sand/60">
             {formatFullDate(checkIn, locale)} → {formatFullDate(checkOut, locale)}
           </p>
-          <p className="mt-1 text-sm text-black/60 dark:text-white/60">
+          <p className="mt-1 text-sm text-ink/60 dark:text-sand/60">
             {t("public.roomsLeft", { count: quote.available })}
           </p>
           <p className="mt-2 font-semibold">
@@ -153,7 +153,7 @@ export default async function PublicBookingFormPage({
 
           <button
             type="submit"
-            className="mt-2 w-full rounded-xl bg-slate-900 px-4 py-3.5 text-base font-semibold text-white dark:bg-white dark:text-slate-900"
+            className="mt-2 w-full rounded-xl bg-primary px-4 py-3.5 text-base font-semibold text-primary-foreground"
           >
             {t("public.confirmBooking")}
           </button>

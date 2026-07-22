@@ -1,8 +1,10 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { getLocale } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
-import { createBookingAtomic, AvailabilityError, RoomTypeNotFoundError } from "@/lib/availability";
+import { AvailabilityError, RoomTypeNotFoundError } from "@/lib/availability";
+import { resolveGuestAndCreateBooking } from "@/lib/booking-creation";
 import { decryptSecret } from "@/lib/crypto";
 import { createPaymentLink, RazorpayError } from "@/lib/razorpay";
 import { parseDateKey } from "@/lib/dates";
@@ -55,18 +57,17 @@ export async function createPublicBooking(hotelSlug: string, formData: FormData)
   const adults = Number.isInteger(Number(adultsRaw)) && Number(adultsRaw) > 0 ? Number(adultsRaw) : 1;
   const children = Number.isInteger(Number(childrenRaw)) && Number(childrenRaw) >= 0 ? Number(childrenRaw) : 0;
 
-  let guest = await prisma.guest.findFirst({ where: { hotelId: hotel.id, phone: guestPhone } });
-  if (!guest) {
-    guest = await prisma.guest.create({
-      data: { hotelId: hotel.id, name: guestName, phone: guestPhone, email: guestEmail || null },
-    });
-  }
+  const locale = await getLocale();
 
   let bookingId: string;
   try {
-    const booking = await createBookingAtomic({
+    const booking = await resolveGuestAndCreateBooking({
       hotelId: hotel.id,
-      guestId: guest.id,
+      hotelName: hotel.name,
+      hotelSlug: hotel.slug,
+      guestName,
+      guestPhone,
+      guestEmail,
       roomTypeId,
       checkIn,
       checkOut,
@@ -76,6 +77,7 @@ export async function createPublicBooking(hotelSlug: string, formData: FormData)
       source: "DIRECT",
       notes: null,
       createdById: null,
+      locale,
     });
     bookingId = booking.id;
   } catch (error) {

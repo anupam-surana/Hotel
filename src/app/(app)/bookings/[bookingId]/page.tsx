@@ -96,7 +96,7 @@ export default async function BookingDetailPage({
               {booking.guest.name}
             </Link>
           </h1>
-          <p className="text-sm text-black/60 dark:text-white/60">{booking.guest.phone}</p>
+          <p className="text-sm text-ink/60 dark:text-sand/60">{booking.guest.phone}</p>
         </div>
         <div className="flex flex-col items-end gap-1">
           <BookingStatusBadge status={booking.status} />
@@ -104,11 +104,11 @@ export default async function BookingDetailPage({
         </div>
       </div>
 
-      <div className="rounded-2xl border border-black/10 p-4 dark:border-white/10">
+      <div className="rounded-2xl border border-ink/10 p-4 dark:border-sand/10">
         <p className="font-medium">
           {formatFullDate(booking.checkIn, locale)} → {formatFullDate(booking.checkOut, locale)}
         </p>
-        <p className="text-sm text-black/60 dark:text-white/60">
+        <p className="text-sm text-ink/60 dark:text-sand/60">
           {t("bookings.adultsChildren", { adults: booking.adults, children: booking.children })}
         </p>
         <div className="mt-2 flex items-center gap-2">
@@ -120,7 +120,7 @@ export default async function BookingDetailPage({
       {booking.notes && (
         <div>
           <h2 className="text-sm font-semibold">{t("common.notes")}</h2>
-          <p className="text-sm text-black/70 dark:text-white/70">{booking.notes}</p>
+          <p className="text-sm text-ink/70 dark:text-sand/70">{booking.notes}</p>
         </div>
       )}
 
@@ -136,11 +136,11 @@ export default async function BookingDetailPage({
           {booking.bookingRooms.map((br) => (
             <div
               key={br.id}
-              className="flex items-center justify-between gap-3 rounded-xl border border-black/10 p-3 dark:border-white/10"
+              className="flex items-center justify-between gap-3 rounded-xl border border-ink/10 p-3 dark:border-sand/10"
             >
               <div>
                 <p className="text-sm font-medium">{br.roomType.name}</p>
-                <p className="text-xs text-black/50 dark:text-white/50">
+                <p className="text-xs text-ink/50 dark:text-sand/50">
                   {formatCurrency(br.amount.toString(), locale)}
                 </p>
               </div>
@@ -154,7 +154,7 @@ export default async function BookingDetailPage({
                       { value: "", label: t("bookings.unassigned") },
                       ...availableRooms.map((r) => ({ value: r.id, label: r.roomNumber })),
                     ]}
-                    className="rounded-full border border-black/15 bg-transparent px-3 py-1.5 text-xs font-medium dark:border-white/20"
+                    className="rounded-full border border-ink/15 bg-transparent px-3 py-1.5 text-xs font-medium dark:border-sand/20"
                   />
                 </form>
               ) : (
@@ -169,14 +169,14 @@ export default async function BookingDetailPage({
         <h2 className="font-semibold">{t("payments.title")}</h2>
 
         {booking.payments.length === 0 && (
-          <p className="text-sm text-black/60 dark:text-white/60">{t("payments.noPayments")}</p>
+          <p className="text-sm text-ink/60 dark:text-sand/60">{t("payments.noPayments")}</p>
         )}
 
         <div className="flex flex-col gap-2">
           {booking.payments.map((payment) => (
             <div
               key={payment.id}
-              className="flex flex-col gap-2 rounded-xl border border-black/10 p-3 dark:border-white/10"
+              className="flex flex-col gap-2 rounded-xl border border-ink/10 p-3 dark:border-sand/10"
             >
               <div className="flex items-center justify-between gap-3">
                 <div>
@@ -184,11 +184,11 @@ export default async function BookingDetailPage({
                     {payment.type === "REFUND" ? "− " : ""}
                     {formatCurrency(payment.amount.toString(), locale)}
                   </p>
-                  <p className="text-xs text-black/50 dark:text-white/50">
+                  <p className="text-xs text-ink/50 dark:text-sand/50">
                     {tPaymentMethod(payment.method)} · {formatFullDate(payment.createdAt, locale)}
                   </p>
                   {payment.notes && (
-                    <p className="mt-1 text-xs text-black/70 dark:text-white/70">{payment.notes}</p>
+                    <p className="mt-1 text-xs text-ink/70 dark:text-sand/70">{payment.notes}</p>
                   )}
                 </div>
                 <span
@@ -221,7 +221,7 @@ export default async function BookingDetailPage({
                     <form action={refreshPaymentLinkStatus.bind(null, booking.id, payment.id)}>
                       <button
                         type="submit"
-                        className="shrink-0 rounded-full border border-black/15 px-3 py-1.5 text-xs font-medium dark:border-white/20"
+                        className="shrink-0 rounded-full border border-ink/15 px-3 py-1.5 text-xs font-medium dark:border-sand/20"
                       >
                         {t("payments.checkStatus")}
                       </button>
@@ -237,7 +237,7 @@ export default async function BookingDetailPage({
           <>
             <form
               action={recordPayment.bind(null, booking.id)}
-              className="flex flex-col gap-2 rounded-xl border border-dashed border-black/15 p-3 dark:border-white/20"
+              className="flex flex-col gap-2 rounded-xl border border-dashed border-ink/15 p-3 dark:border-sand/20"
             >
               <p className="text-sm font-medium">{t("payments.recordPayment")}</p>
               <div className="grid grid-cols-2 gap-2">
@@ -250,12 +250,12 @@ export default async function BookingDetailPage({
                   defaultValue={balanceDue.greaterThan(0) ? balanceDue.toString() : undefined}
                   required
                   placeholder={t("payments.amount")}
-                  className="rounded-lg border border-black/15 px-3 py-2.5 text-sm dark:border-white/20 dark:bg-white/5"
+                  className="rounded-lg border border-ink/15 px-3 py-2.5 text-sm dark:border-sand/20 dark:bg-sand/5"
                 />
                 <select
                   name="method"
                   required
-                  className="rounded-lg border border-black/15 px-3 py-2.5 text-sm dark:border-white/20 dark:bg-white/5"
+                  className="rounded-lg border border-ink/15 px-3 py-2.5 text-sm dark:border-sand/20 dark:bg-sand/5"
                 >
                   {MANUAL_PAYMENT_METHODS.map((m) => (
                     <option key={m} value={m}>
@@ -267,11 +267,11 @@ export default async function BookingDetailPage({
               <input
                 name="notes"
                 placeholder={t("payments.notesPlaceholder")}
-                className="rounded-lg border border-black/15 px-3 py-2.5 text-sm dark:border-white/20 dark:bg-white/5"
+                className="rounded-lg border border-ink/15 px-3 py-2.5 text-sm dark:border-sand/20 dark:bg-sand/5"
               />
               <button
                 type="submit"
-                className="rounded-lg bg-slate-900 px-3 py-2.5 text-sm font-semibold text-white dark:bg-white dark:text-slate-900"
+                className="rounded-lg bg-primary px-3 py-2.5 text-sm font-semibold text-primary-foreground"
               >
                 {t("payments.recordPayment")}
               </button>
@@ -280,7 +280,7 @@ export default async function BookingDetailPage({
             {razorpaySettings && (
               <form
                 action={generatePaymentLink.bind(null, booking.id)}
-                className="flex flex-col gap-2 rounded-xl border border-dashed border-black/15 p-3 dark:border-white/20"
+                className="flex flex-col gap-2 rounded-xl border border-dashed border-ink/15 p-3 dark:border-sand/20"
               >
                 <p className="text-sm font-medium">{t("payments.generateLink")}</p>
                 <input
@@ -292,11 +292,11 @@ export default async function BookingDetailPage({
                   defaultValue={balanceDue.greaterThan(0) ? balanceDue.toString() : undefined}
                   required
                   placeholder={t("payments.amount")}
-                  className="rounded-lg border border-black/15 px-3 py-2.5 text-sm dark:border-white/20 dark:bg-white/5"
+                  className="rounded-lg border border-ink/15 px-3 py-2.5 text-sm dark:border-sand/20 dark:bg-sand/5"
                 />
                 <button
                   type="submit"
-                  className="rounded-lg border border-black/15 px-3 py-2.5 text-sm font-semibold dark:border-white/20"
+                  className="rounded-lg border border-ink/15 px-3 py-2.5 text-sm font-semibold dark:border-sand/20"
                 >
                   {t("payments.generateLink")}
                 </button>
@@ -318,12 +318,12 @@ export default async function BookingDetailPage({
                     step="0.01"
                     required
                     placeholder={t("payments.amount")}
-                    className="rounded-lg border border-black/15 px-3 py-2.5 text-sm dark:border-white/20 dark:bg-white/5"
+                    className="rounded-lg border border-ink/15 px-3 py-2.5 text-sm dark:border-sand/20 dark:bg-sand/5"
                   />
                   <select
                     name="method"
                     required
-                    className="rounded-lg border border-black/15 px-3 py-2.5 text-sm dark:border-white/20 dark:bg-white/5"
+                    className="rounded-lg border border-ink/15 px-3 py-2.5 text-sm dark:border-sand/20 dark:bg-sand/5"
                   >
                     {MANUAL_PAYMENT_METHODS.map((m) => (
                       <option key={m} value={m}>
@@ -335,7 +335,7 @@ export default async function BookingDetailPage({
                 <input
                   name="notes"
                   placeholder={t("payments.notesPlaceholder")}
-                  className="rounded-lg border border-black/15 px-3 py-2.5 text-sm dark:border-white/20 dark:bg-white/5"
+                  className="rounded-lg border border-ink/15 px-3 py-2.5 text-sm dark:border-sand/20 dark:bg-sand/5"
                 />
                 <button
                   type="submit"
@@ -358,7 +358,7 @@ export default async function BookingDetailPage({
             <button
               type="submit"
               disabled={!allAssigned}
-              className="w-full rounded-xl bg-slate-900 px-4 py-3.5 text-base font-semibold text-white disabled:opacity-40 dark:bg-white dark:text-slate-900"
+              className="w-full rounded-xl bg-primary px-4 py-3.5 text-base font-semibold text-primary-foreground disabled:opacity-40"
             >
               {t("bookings.checkInAction")}
             </button>
@@ -379,7 +379,7 @@ export default async function BookingDetailPage({
               rows={2}
               maxLength={500}
               placeholder={t("bookings.cancellationReasonPlaceholder")}
-              className="w-full rounded-xl border border-black/15 px-4 py-3 text-sm outline-none focus:border-black/40 dark:border-white/20 dark:bg-white/5"
+              className="w-full rounded-xl border border-ink/15 px-4 py-3 text-sm outline-none focus:border-ink/40 dark:border-sand/20 dark:bg-sand/5"
             />
             <ConfirmSubmitButton
               confirmMessage={t("bookings.cancelConfirm")}
@@ -395,7 +395,7 @@ export default async function BookingDetailPage({
         <form action={checkOutBooking.bind(null, booking.id)}>
           <button
             type="submit"
-            className="w-full rounded-xl bg-slate-900 px-4 py-3.5 text-base font-semibold text-white dark:bg-white dark:text-slate-900"
+            className="w-full rounded-xl bg-primary px-4 py-3.5 text-base font-semibold text-primary-foreground"
           >
             {t("bookings.checkOutAction")}
           </button>
@@ -408,7 +408,7 @@ export default async function BookingDetailPage({
           {booking.invoice ? (
             <Link
               href={`/invoices/${booking.id}`}
-              className="rounded-xl border border-black/15 px-4 py-3.5 text-center text-sm font-semibold dark:border-white/20"
+              className="rounded-xl border border-ink/15 px-4 py-3.5 text-center text-sm font-semibold dark:border-sand/20"
             >
               {t("invoice.view")} ({booking.invoice.invoiceNumber})
             </Link>
@@ -417,7 +417,7 @@ export default async function BookingDetailPage({
               <form action={generateInvoice.bind(null, booking.id)}>
                 <button
                   type="submit"
-                  className="w-full rounded-xl border border-black/15 px-4 py-3.5 text-sm font-semibold dark:border-white/20"
+                  className="w-full rounded-xl border border-ink/15 px-4 py-3.5 text-sm font-semibold dark:border-sand/20"
                 >
                   {t("invoice.generate")}
                 </button>
